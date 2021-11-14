@@ -8,11 +8,12 @@ import { Profile } from './profiles/profile.entity';
 import { Role } from './roles/role.entity';
 import { User } from './user.entity';
 import { RolesController } from './roles/roles.controller';
+import { HashService } from './hash/hash.service';
 
 @Module({
-  providers: [UsersService, RolesService, ProfilesService],
+  providers: [UsersService, RolesService, ProfilesService, HashService],
   controllers: [UsersController, RolesController],
   imports: [TypeOrmModule.forFeature([User, Role, Profile])],
-  exports: [UsersService, RolesService, ProfilesService],
+  exports: [UsersService, RolesService, ProfilesService, HashService],
 })
 export class UsersModule {}

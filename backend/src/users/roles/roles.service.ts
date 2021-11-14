@@ -9,9 +9,7 @@ import { isEmpty } from 'lodash';
 export class RolesService {
   private roles: Role[] = [];
 
-  constructor(
-    @InjectRepository(Role) private readonly roleRepo: Repository<Role>,
-  ) {}
+  constructor(@InjectRepository(Role) private readonly roleRepo: Repository<Role>) {}
 
   public async getConfig(): Promise<GetRolesConfigDto> {
     await this.syncRoles();
