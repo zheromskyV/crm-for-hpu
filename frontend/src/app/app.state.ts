@@ -1,3 +1,6 @@
+import { StoreFeature } from './constants/store.enum';
+import { AuthState } from './auth/store/auth.state';
+
 export interface AppState {
-  [storeFeature: string]: unknown;
+  [StoreFeature.Auth]: AuthState;
 }

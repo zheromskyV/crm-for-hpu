@@ -14,13 +14,13 @@ export class AuthService {
     private readonly hashService: HashService
   ) {}
 
-  async register(userDto: CreateUserDto) {
+  async register(userDto: CreateUserDto): Promise<TokenDto> {
     const user: User = await this.usersService.create(userDto);
 
     return this.signToken(user);
   }
 
-  async login(loginDto: LoginUserDto) {
+  async login(loginDto: LoginUserDto): Promise<TokenDto> {
     const user: User = await this.validateUser(loginDto);
 
     return this.signToken(user);
@@ -29,10 +29,12 @@ export class AuthService {
   private async validateUser(loginDto: LoginUserDto): Promise<User> {
     const user: User = await this.usersService.getByEmail(loginDto.email);
 
-    const isValidPassword = await this.hashService.compare(loginDto.password, user.password);
+    if (user) {
+      const isValidPassword = await this.hashService.compare(loginDto.password, user.password);
 
-    if (user && isValidPassword) {
-      return user;
+      if (isValidPassword) {
+        return user;
+      }
     }
 
     throw new UnauthorizedException('bad email or password');

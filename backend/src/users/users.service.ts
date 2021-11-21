@@ -31,6 +31,13 @@ export class UsersService {
     });
   }
 
+  async getById(id: string): Promise<User> {
+    return this.userRepo.findOne({
+      relations: this.relations,
+      where: { id },
+    });
+  }
+
   async create(userDto: CreateUserDto): Promise<User> {
     try {
       const role: Role = await this.rolesService.getById(userDto.roleId);

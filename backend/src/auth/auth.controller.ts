@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { LoginUserDto } from './auth.dto';
+import { LoginUserDto, TokenDto } from './auth.dto';
 import { CreateUserDto } from '../users/users.dto';
 import { AuthService } from './auth.service';
 import { SkipAuth } from './skip-auth.decorator';
@@ -10,13 +10,13 @@ export class AuthController {
 
   @SkipAuth()
   @Post('login')
-  async login(@Body() loginUserDto: LoginUserDto) {
+  async login(@Body() loginUserDto: LoginUserDto): Promise<TokenDto> {
     return this.authService.login(loginUserDto);
   }
 
   @SkipAuth()
   @Post('register')
-  async register(@Body() userDto: CreateUserDto) {
+  async register(@Body() userDto: CreateUserDto): Promise<TokenDto> {
     return this.authService.register(userDto);
   }
 }

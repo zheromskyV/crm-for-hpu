@@ -1,0 +1,50 @@
+<app-auth-page-container [header]="'Авторизация'">
+  <form class="form p-d-flex p-flex-column p-jc-start" [formGroup]="formGroup" novalidate>
+    <div class="field p-inputgroup">
+      <span class="p-inputgroup-addon">
+        <i [class]="icons.login"></i>
+      </span>
+      <input
+        pInputText
+        type="text"
+        autocomplete="off"
+        class="p-inputtext"
+        [placeholder]="'Логин (почта)'"
+        [id]="formFields.login"
+        [formControlName]="formFields.login"
+      />
+    </div>
+
+    <div class="field p-inputgroup">
+      <span class="p-inputgroup-addon">
+        <i [class]="icons.password"></i>
+      </span>
+      <input
+        pPassword
+        type="password"
+        autocomplete="off"
+        [placeholder]="'Пароль'"
+        [id]="formFields.password"
+        [formControlName]="formFields.password"
+        [feedback]="false"
+      />
+    </div>
+
+    <div class="buttons-container p-d-flex p-jc-between">
+      <p-button
+        [label]="'Войти'"
+        [icon]="icons.signIn"
+        [disabled]="!isFormValid"
+        (click)="signIn()"
+        styleClass="button p-button"
+      ></p-button>
+
+      <p-button
+        [label]="'Зарегистрироваться'"
+        [icon]="icons.signUp"
+        (click)="register()"
+        styleClass="button p-button-secondary"
+      ></p-button>
+    </div>
+  </form>
+</app-auth-page-container>

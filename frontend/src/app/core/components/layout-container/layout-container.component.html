@@ -1,0 +1,13 @@
+<app-notification></app-notification>
+
+<div class="layout-wrapper">
+  <main class="p-d-flex p-flex-row">
+    <aside *ngIf="isNavigationShown$ | async">
+      <app-navigation-bar></app-navigation-bar>
+    </aside>
+
+    <div class="content-wrapper">
+      <ng-content></ng-content>
+    </div>
+  </main>
+</div>
