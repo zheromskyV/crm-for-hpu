@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ProfileComponent } from './components/profile/profile.component';
+import { SharedModule } from '../shared/shared.module';
+import { UsersRoutingModule } from './users-routing.module';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule],
+  declarations: [ProfileComponent],
+  imports: [SharedModule, UsersRoutingModule],
 })
 export class UsersModule {}

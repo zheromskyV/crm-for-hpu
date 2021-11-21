@@ -9,7 +9,7 @@ export class NavigationService {
   constructor(private readonly router: Router, private readonly zone: NgZone) {}
 
   private static getAuthPage(subPage: string): string {
-    return `${routerPaths.auth}/${subPage}`;
+    return `${routerPaths.auth.home}/${subPage}`;
   }
 
   navigateTo(route: string): void {
@@ -23,10 +23,10 @@ export class NavigationService {
   }
 
   navigateToLoginPage(): void {
-    this.navigateTo(NavigationService.getAuthPage(routerPaths.login));
+    this.navigateTo(NavigationService.getAuthPage(routerPaths.auth.login));
   }
 
   navigateToRegistrationPage(): void {
-    this.navigateTo(NavigationService.getAuthPage(routerPaths.registration));
+    this.navigateTo(NavigationService.getAuthPage(routerPaths.auth.register));
   }
 }
