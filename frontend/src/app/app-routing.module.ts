@@ -15,6 +15,14 @@ const routes: Routes = [
     path: routerPaths.users.home,
     loadChildren: () => import('./users/users.module').then((m) => m.UsersModule),
   },
+  {
+    path: routerPaths.notFound,
+    loadChildren: () => import('./not-found/not-found.module').then((m) => m.NotFoundModule),
+  },
+  {
+    path: '**',
+    redirectTo: routerPaths.notFound,
+  },
 ];
 
 @NgModule({

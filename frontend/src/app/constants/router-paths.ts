@@ -18,4 +18,5 @@ export const routerPaths = {
     home: 'users',
     profile: 'my-profile',
   },
+  notFound: 'not-found',
 };

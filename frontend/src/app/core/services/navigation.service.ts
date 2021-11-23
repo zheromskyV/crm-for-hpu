@@ -12,6 +12,10 @@ export class NavigationService {
     return `${routerPaths.auth.home}/${subPage}`;
   }
 
+  private static getReqPage(subPage: string): string {
+    return `${routerPaths.requests.home}/${subPage}`;
+  }
+
   navigateTo(route: string): void {
     this.zone.run(() => {
       this.router.navigate([route], { replaceUrl: true });
@@ -19,7 +23,7 @@ export class NavigationService {
   }
 
   navigateToHomePage(): void {
-    this.navigateTo(routerPaths.home);
+    this.navigateTo(NavigationService.getReqPage(routerPaths.requests.incident));
   }
 
   navigateToLoginPage(): void {
