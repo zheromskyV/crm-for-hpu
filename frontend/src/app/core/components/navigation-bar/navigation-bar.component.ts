@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PrimeIcons } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { NavigationLink } from '../../../models/navigation';
-import { Router, Event as RouterEvent, RoutesRecognized } from '@angular/router';
+import { Router, Event as RouterEvent, NavigationEnd } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NavigationService } from '../../services/navigation.service';
 import { AppState } from '../../../app.state';
@@ -34,6 +34,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.currentUrl = this.router.url;
+
     this.subscriptions.add(
       this.store.select(FromAuth.getCurrentRole).subscribe((role) => {
         this.navigationLinks = navigation[role];
@@ -43,8 +45,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.router.events
         .pipe(
-          filter((event: RouterEvent) => event instanceof RoutesRecognized),
-          map((event) => (event as RoutesRecognized).url)
+          filter((event: RouterEvent) => event instanceof NavigationEnd),
+          map((event) => (event as NavigationEnd).urlAfterRedirects)
         )
         .subscribe((currentUrl: string) => {
           this.currentUrl = currentUrl;

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { routerPaths } from './constants/router-paths';
+import { AuthGuardService } from './core/guards/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
   {
     path: routerPaths.notFound,
     loadChildren: () => import('./not-found/not-found.module').then((m) => m.NotFoundModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: '**',
