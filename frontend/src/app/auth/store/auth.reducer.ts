@@ -23,6 +23,13 @@ const reducer = createReducer(
   on(AuthActions.clearCurrentRole, (state) => ({
     ...state,
     currentRole: initialAuthState.currentRole,
+  })),
+  on(AuthActions.setCurrentUserProfile, (state, { profile }) => ({
+    ...state,
+    currentUser: {
+      ...state.currentUser,
+      profile,
+    },
   }))
 );
 

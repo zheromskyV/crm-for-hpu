@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { CreateUserModel, User } from '../../models/user';
+import { CreateUserModel, User, UserProfile } from '../../models/user';
 import { Role } from '../../constants/roles';
 
 const setUserLoggedIn = createAction('[AUTH] SET_USER_LOGGED_IN', props<{ isUserLoggedIn: boolean }>());
@@ -11,6 +11,8 @@ const initSession = createAction('[AUTH] INIT_SESSION');
 const logOut = createAction('[AUTH] LOG_OUT');
 
 const setCurrentUser = createAction('[AUTH] SET_CURRENT_USER', props<{ user: User }>());
+
+const setCurrentUserProfile = createAction('[AUTH] SET_CURRENT_USER_PROFILE', props<{ profile: UserProfile }>());
 
 const clearCurrentUser = createAction('[AUTH] CLEAR_CURRENT_USER');
 
@@ -26,6 +28,7 @@ export const AuthActions = {
   initSession,
   logOut,
   setCurrentUser,
+  setCurrentUserProfile,
   clearCurrentUser,
   setCurrentRole,
   clearCurrentRole,

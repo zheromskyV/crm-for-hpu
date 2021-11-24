@@ -14,3 +14,5 @@ export interface GetProfileDto {
   isVip: boolean;
   address: string;
 }
+
+export type UpdateProfileDto = GetProfileDto;

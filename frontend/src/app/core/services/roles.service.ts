@@ -16,7 +16,7 @@ import { cloneDeep } from 'lodash';
 export class RolesService {
   constructor(private readonly http: HttpClient, private readonly store: Store<AppState>) {}
 
-  public getRoleById(roleId: string): Observable<Role> {
+  public getRoleById$(roleId: string): Observable<Role> {
     return this.store.select(FromCore.getRoles).pipe(
       map((roles: Roles) => {
         for (const [key, value] of Object.entries(roles)) {
@@ -30,7 +30,7 @@ export class RolesService {
     );
   }
 
-  public loadRoles(): Observable<Roles> {
+  public loadRoles$(): Observable<Roles> {
     return this.http.get<RolesConfig>(`${BASE_API_URL}/roles`).pipe(
       map(({ roles }) => {
         const rolesData: Roles = cloneDeep(initialRolesData);

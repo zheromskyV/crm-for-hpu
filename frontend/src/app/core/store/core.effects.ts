@@ -27,7 +27,7 @@ export class CoreEffects {
   loadRoles$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(CoreActions.loadRoles),
-      switchMap(() => this.rolesService.loadRoles()),
+      switchMap(() => this.rolesService.loadRoles$()),
       switchMap((roles: Roles) => [CoreActions.setRoles({ roles })])
     )
   );

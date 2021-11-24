@@ -13,6 +13,7 @@ import { Role } from '../../constants/roles';
 import { RolesService } from '../../core/services/roles.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { FromCore } from '../../core/store/core.selectors';
+import { Nullable } from '../../models/core';
 
 @Injectable()
 export class AuthEffects {
@@ -59,10 +60,10 @@ export class AuthEffects {
   initSession$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.initSession),
-      switchMap(() => this.usersService.getMe()),
-      switchMap((user: User | null) =>
+      switchMap(() => this.usersService.getMe$()),
+      switchMap((user: Nullable<User>) =>
         user
-          ? this.rolesService.getRoleById(user.roleId).pipe(
+          ? this.rolesService.getRoleById$(user.roleId).pipe(
               tap(() => this.navigationService.navigateToHomePage()),
               tap(() =>
                 this.notificationService.success(`Добро пожаловать${user.profile ? `, ${user.profile.name}` : ''}`)

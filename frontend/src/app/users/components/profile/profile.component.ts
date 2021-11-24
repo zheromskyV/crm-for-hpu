@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { UserInfo } from '../../../models/user';
+import { Observable } from 'rxjs';
+import { PrimeIcons } from 'primeng/api';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-profile',
@@ -6,7 +10,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  constructor() {}
+  icons = {
+    edit: PrimeIcons.PENCIL,
+  };
 
-  ngOnInit(): void {}
+  userInfo$!: Observable<UserInfo>;
+  isEditable = false;
+
+  constructor(private readonly usersService: UsersService) {}
+
+  ngOnInit(): void {
+    this.userInfo$ = this.usersService.getUserInfo$();
+  }
+
+  startEditing(): void {
+    this.isEditable = true;
+  }
+
+  stopEditing(): void {
+    this.isEditable = false;
+  }
 }
