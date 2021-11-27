@@ -4,18 +4,22 @@ import { Role } from './role.entity';
 import { Repository } from 'typeorm';
 import { GetRolesConfigDto } from './roles.dto';
 import { isEmpty } from 'lodash';
+import { ConfigService } from '../../core/config/config.service';
 
 @Injectable()
 export class RolesService {
   private roles: Role[] = [];
 
-  constructor(@InjectRepository(Role) private readonly roleRepo: Repository<Role>) {}
+  constructor(
+    @InjectRepository(Role) private readonly roleRepo: Repository<Role>,
+    private readonly configService: ConfigService
+  ) {}
 
   public async getConfig(): Promise<GetRolesConfigDto> {
     await this.syncRoles();
 
     return {
-      roles: this.roles.map(({ id, title }) => ({ title, key: id })),
+      roles: this.configService.map(this.roles),
     };
   }
 

@@ -1,6 +1,5 @@
+import { GetConfigDto } from '../../core/config/config.interface';
+
 export interface GetRolesConfigDto {
-  roles: {
-    title: string;
-    key: string;
-  }[];
+  roles: GetConfigDto;
 }

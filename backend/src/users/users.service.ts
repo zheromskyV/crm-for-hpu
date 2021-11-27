@@ -7,7 +7,7 @@ import { RolesService } from './roles/roles.service';
 import { Role } from './roles/role.entity';
 import { ProfilesService } from './profiles/profiles.service';
 import { Profile } from './profiles/profile.entity';
-import { HashService } from './hash/hash.service';
+import { HashService } from '../core/hash/hash.service';
 
 @Injectable()
 export class UsersService {
