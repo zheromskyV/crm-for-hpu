@@ -39,7 +39,7 @@ export class UsersService {
 
   getUserInfo$(): Observable<UserInfo> {
     return this.store.select(FromAuth.getCurrentUser).pipe(
-      switchMap((user: User) => zip(of(user), this.rolesService.getRoleById$(user.roleId))),
+      switchMap((user: User) => zip(of(user), this.rolesService.getById$(user.roleId))),
       map(([user, role]: [User, Role]) => ({ ...omit(user, ['roleId']), role }))
     );
   }

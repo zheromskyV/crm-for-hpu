@@ -63,7 +63,7 @@ export class AuthEffects {
       switchMap(() => this.usersService.getMe$()),
       switchMap((user: Nullable<User>) =>
         user
-          ? this.rolesService.getRoleById$(user.roleId).pipe(
+          ? this.rolesService.getById$(user.roleId).pipe(
               tap(() => this.navigationService.navigateToHomePage()),
               tap(() =>
                 this.notificationService.success(`Добро пожаловать${user.profile ? `, ${user.profile.name}` : ''}`)

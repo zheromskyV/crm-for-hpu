@@ -5,10 +5,17 @@ import { UsersService } from './users.service';
 import { GetProfileDto, UpdateProfileDto } from './profiles/profiles.dto';
 import { Profile } from './profiles/profile.entity';
 import { ProfilesService } from './profiles/profiles.service';
+import { SkipAuth } from '../auth/skip-auth.decorator';
+import { GetRolesConfigDto } from './roles/roles.dto';
+import { RolesService } from './roles/roles.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService, private readonly profilesService: ProfilesService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly profilesService: ProfilesService,
+    private readonly rolesService: RolesService
+  ) {}
 
   @Get()
   async getAll(): Promise<GetUserDto[]> {
@@ -37,5 +44,11 @@ export class UsersController {
     const profile: Profile = await this.profilesService.update(profileDto);
 
     return this.profilesService.mapToSend(profile);
+  }
+
+  @SkipAuth()
+  @Get('roles')
+  async getRolesConfig(): Promise<GetRolesConfigDto> {
+    return this.rolesService.getConfig();
   }
 }

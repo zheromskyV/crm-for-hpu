@@ -1,3 +1,6 @@
+import { GetUserDto } from '../users/users.dto';
+import { GetFeedDto } from './feeds/feeds.dto';
+
 export interface GetRequestDto {
   id: string;
   code: number;
@@ -5,4 +8,15 @@ export interface GetRequestDto {
   urgency: number;
   statusId: string;
   typeId: string;
+  createdBy: GetUserDto;
+  assignedTo: GetUserDto;
+  createdAt: Date;
+  updatedAt: Date;
+  feeds: GetFeedDto[];
+  mailTo?: string;
+  subject?: string;
+  linkedRequestCode?: string;
+  researchParticipation?: boolean;
+  rating?: number;
+  numberOfAffected?: number;
 }

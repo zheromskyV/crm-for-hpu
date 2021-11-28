@@ -8,29 +8,21 @@ import { Injectable, NgZone } from '@angular/core';
 export class NavigationService {
   constructor(private readonly router: Router, private readonly zone: NgZone) {}
 
-  private static getAuthPage(subPage: string): string {
-    return `${routerPaths.auth.home}/${subPage}`;
-  }
-
-  private static getReqPage(subPage: string): string {
-    return `${routerPaths.requests.home}/${subPage}`;
-  }
-
-  navigateTo(route: string): void {
+  navigateTo(commands: string | string[]): void {
     this.zone.run(() => {
-      this.router.navigate([route], { replaceUrl: true });
+      this.router.navigate(commands instanceof Array ? commands : [commands], { replaceUrl: true });
     });
   }
 
   navigateToHomePage(): void {
-    this.navigateTo(NavigationService.getReqPage(routerPaths.requests.incident));
+    this.navigateTo([routerPaths.users.home, routerPaths.users.profile]);
   }
 
   navigateToLoginPage(): void {
-    this.navigateTo(NavigationService.getAuthPage(routerPaths.auth.login));
+    this.navigateTo([routerPaths.auth.home, routerPaths.auth.login]);
   }
 
   navigateToRegistrationPage(): void {
-    this.navigateTo(NavigationService.getAuthPage(routerPaths.auth.register));
+    this.navigateTo([routerPaths.auth.home, routerPaths.auth.register]);
   }
 }

@@ -7,6 +7,14 @@ const reducer = createReducer(
   on(CoreActions.setRoles, (state, { roles }) => ({
     ...state,
     roles,
+  })),
+  on(CoreActions.setRequestStatuses, (state, { requestStatuses }) => ({
+    ...state,
+    requestStatuses,
+  })),
+  on(CoreActions.setRequestTypes, (state, { requestTypes }) => ({
+    ...state,
+    requestTypes,
   }))
 );
 

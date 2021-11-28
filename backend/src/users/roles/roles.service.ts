@@ -5,9 +5,10 @@ import { Repository } from 'typeorm';
 import { GetRolesConfigDto } from './roles.dto';
 import { isEmpty } from 'lodash';
 import { ConfigService } from '../../core/config/config.service';
+import { ConfigServiceUser } from '../../core/config/config.interface';
 
 @Injectable()
-export class RolesService {
+export class RolesService implements ConfigServiceUser {
   private roles: Role[] = [];
 
   constructor(
@@ -15,21 +16,21 @@ export class RolesService {
     private readonly configService: ConfigService
   ) {}
 
-  public async getConfig(): Promise<GetRolesConfigDto> {
-    await this.syncRoles();
+  async getConfig(): Promise<GetRolesConfigDto> {
+    await this.sync();
 
     return {
       roles: this.configService.map(this.roles),
     };
   }
 
-  public async getById(roleId: string): Promise<Role> {
-    await this.syncRoles();
+  async getById(roleId: string): Promise<Role> {
+    await this.sync();
 
     return this.roles.find(({ id }: Role) => id === roleId);
   }
 
-  private async syncRoles(): Promise<void> {
+  async sync(): Promise<void> {
     if (isEmpty(this.roles)) {
       this.roles = await this.roleRepo.find();
     }

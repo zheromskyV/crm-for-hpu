@@ -34,7 +34,7 @@ const bugNavLink: NavigationLink = {
 };
 
 const featureNavLink: NavigationLink = {
-  name: 'Запросить новые функции',
+  name: 'Запросить улучшение',
   url: `${routerPaths.requests.home}/${routerPaths.requests.feature}`,
   icon: PrimeIcons.COMPASS,
 };
@@ -70,9 +70,9 @@ const callUsNavLink: NavigationLink = {
 };
 
 export const navigation: Navigation = {
-  [Role.Admin]: [reqViewNavLink, analyticsNavLink],
-  [Role.Agent]: [reqViewNavLink],
-  [Role.ChatAgent]: [chatNavLink],
+  [Role.Admin]: [profileNavLink, reqViewNavLink, analyticsNavLink],
+  [Role.Agent]: [profileNavLink, reqViewNavLink],
+  [Role.ChatAgent]: [profileNavLink, chatNavLink],
   [Role.Client]: [
     profileNavLink,
     chatNavLink,
