@@ -10,6 +10,8 @@ import { SharedModule } from '../shared/shared.module';
 import { ViewRequestsComponent } from './components/view-requests/view-requests.component';
 import { ViewRequestsTableComponent } from './components/view-requests-table/view-requests-table.component';
 import { ViewRequestsBoardComponent } from './components/view-requests-board/view-requests-board.component';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,6 @@ import { ViewRequestsBoardComponent } from './components/view-requests-board/vie
     ViewRequestsTableComponent,
     ViewRequestsBoardComponent,
   ],
-  imports: [SharedModule, RequestsRoutingModule],
+  imports: [SharedModule, RequestsRoutingModule, InputNumberModule, CheckboxModule],
 })
 export class RequestsModule {}

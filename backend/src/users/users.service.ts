@@ -56,7 +56,7 @@ export class UsersService {
     }
   }
 
-  public mapToSend({ id, email, role, profile }: User): GetUserDto {
+  mapToSend({ id, email, role, profile }: User): GetUserDto {
     return {
       id,
       email,

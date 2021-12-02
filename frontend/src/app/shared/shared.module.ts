@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
+import { RatingModule } from 'primeng/rating';
 
 @NgModule({
   declarations: [PageContainerComponent],
@@ -23,6 +24,7 @@ import { DropdownModule } from 'primeng/dropdown';
     InputNumberModule,
     DropdownModule,
     CalendarModule,
+    RatingModule,
   ],
   exports: [
     CommonModule,
@@ -36,6 +38,7 @@ import { DropdownModule } from 'primeng/dropdown';
     DropdownModule,
     PageContainerComponent,
     CalendarModule,
+    RatingModule,
   ],
 })
 export class SharedModule {}

@@ -8,6 +8,10 @@ import { Injectable, NgZone } from '@angular/core';
 export class NavigationService {
   constructor(private readonly router: Router, private readonly zone: NgZone) {}
 
+  get currentUrl(): string {
+    return this.router.url;
+  }
+
   navigateTo(commands: string | string[]): void {
     this.zone.run(() => {
       this.router.navigate(commands instanceof Array ? commands : [commands], { replaceUrl: true });

@@ -14,6 +14,7 @@ import { RolesService } from '../../core/services/roles.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { FromCore } from '../../core/store/core.selectors';
 import { Nullable } from '../../models/core';
+import { routerPaths } from '../../constants/router-paths';
 
 @Injectable()
 export class AuthEffects {
@@ -30,7 +31,7 @@ export class AuthEffects {
   logIn$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.logIn),
-      switchMap(({ email, password }) => this.authService.login(email, password)),
+      switchMap(({ email, password }) => this.authService.login$(email, password)),
       tap(({ token }) =>
         token ? this.authService.saveToken(token) : this.notificationService.error('Неверный логин или пароль')
       ),
@@ -43,7 +44,7 @@ export class AuthEffects {
       ofType(AuthActions.register),
       withLatestFrom(this.store.select(FromCore.getRoles)),
       map(([{ user }, roles]) => this.usersService.getBackendCreateUserModel(user, roles)),
-      switchMap((user: CreateUserBackendModel) => this.authService.register(user)),
+      switchMap((user: CreateUserBackendModel) => this.authService.register$(user)),
       tap(({ token }) => {
         if (token) {
           this.notificationService.success('Аккаунт зарегистрирован');
@@ -64,7 +65,6 @@ export class AuthEffects {
       switchMap((user: Nullable<User>) =>
         user
           ? this.rolesService.getById$(user.roleId).pipe(
-              tap(() => this.navigationService.navigateToHomePage()),
               tap(() =>
                 this.notificationService.success(`Добро пожаловать${user.profile ? `, ${user.profile.name}` : ''}`)
               ),
@@ -72,7 +72,12 @@ export class AuthEffects {
                 AuthActions.setUserLoggedIn({ isUserLoggedIn: true }),
                 AuthActions.setCurrentUser({ user }),
                 AuthActions.setCurrentRole({ role }),
-              ])
+              ]),
+              tap(() => {
+                if (this.navigationService.currentUrl.includes(routerPaths.auth.home)) {
+                  this.navigationService.navigateToHomePage();
+                }
+              })
             )
           : []
       )
@@ -83,12 +88,12 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.logOut),
       tap(() => this.authService.clearToken()),
-      tap(() => this.navigationService.navigateToLoginPage()),
       switchMap(() => [
         AuthActions.setUserLoggedIn({ isUserLoggedIn: false }),
         AuthActions.clearCurrentRole(),
         AuthActions.clearCurrentUser(),
-      ])
+      ]),
+      tap(() => this.navigationService.navigateToLoginPage())
     )
   );
 }

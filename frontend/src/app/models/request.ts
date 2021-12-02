@@ -10,7 +10,7 @@ export interface Request {
   statusId: string;
   typeId: string;
   createdBy: User;
-  assignedTo: User;
+  assignedTo?: User;
   createdAt: Date;
   updatedAt: Date;
   feeds: Feed[];
@@ -26,8 +26,21 @@ export interface Feed {
   id: string;
   message: string;
   createdAt: Date;
-  updatedAt: Date;
   createdBy: User;
+}
+
+export interface CreateRequestModel
+  extends Omit<
+    Request,
+    'id' | 'code' | 'statusId' | 'typeId' | 'feeds' | 'createdAt' | 'updatedAt' | 'createdBy' | 'assignedTo'
+  > {
+  status: RequestStatus;
+  type: RequestType;
+}
+
+export interface CreateRequestBackendModel extends Omit<CreateRequestModel, 'status' | 'type'> {
+  statusId: string;
+  typeId: string;
 }
 
 export interface RequestInfo extends Omit<Request, 'statusId' | 'typeId' | 'feeds' | 'createdBy' | 'assignedTo'> {

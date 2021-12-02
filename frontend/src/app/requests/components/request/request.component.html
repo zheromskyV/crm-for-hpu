@@ -1,1 +1,122 @@
-<p>request works!</p>
+<app-page-container [header]="header">
+  <form class="form p-d-flex p-flex-column p-ai-center" [formGroup]="formGroup" novalidate>
+    <div class="section" *ngIf="hasSubject">
+      <div class="section" *ngIf="hasMailTo">
+        <div class="field p-inputgroup">
+          <span class="p-inputgroup-addon">
+            <i [class]="icons.mailTo"></i>
+          </span>
+          <input
+            pInputText
+            type="text"
+            [placeholder]="'Кому отправить'"
+            autocomplete="off"
+            class="p-inputtext"
+            [id]="formFields.mailTo"
+            [formControlName]="formFields.mailTo"
+          />
+        </div>
+      </div>
+
+      <div class="field p-inputgroup">
+        <span class="p-inputgroup-addon">
+          <i [class]="icons.subject"></i>
+        </span>
+        <input
+          pInputText
+          type="text"
+          [placeholder]="'Тема'"
+          autocomplete="off"
+          class="p-inputtext"
+          [id]="formFields.subject"
+          [formControlName]="formFields.subject"
+        />
+      </div>
+    </div>
+
+    <div class="section" *ngIf="hasLinkedIssueCode">
+      <div class="field p-inputgroup">
+        <span class="p-inputgroup-addon">
+          <i [class]="icons.linkedIssueCode"></i>
+        </span>
+        <p-inputNumber
+          [placeholder]="'Код связанного запроса'"
+          [min]="1"
+          [id]="formFields.linkedIssueCode"
+          [formControlName]="formFields.linkedIssueCode"
+        ></p-inputNumber>
+      </div>
+    </div>
+
+    <div class="section" *ngIf="hasMessage">
+      <div class="field message-field">
+        <p>Описание</p>
+        <textarea pInputTextarea [id]="formFields.message" [formControlName]="formFields.message" rows="5"></textarea>
+      </div>
+    </div>
+
+    <div class="section" *ngIf="hasResearchParticipation">
+      <div class="p-field-checkbox">
+        <p-checkbox
+          [binary]="true"
+          [id]="formFields.researchParticipation"
+          [formControlName]="formFields.researchParticipation"
+        ></p-checkbox>
+        <label [for]="formFields.researchParticipation">Я бы хотел, чтобы мой отзыв стал частью исследования</label>
+      </div>
+    </div>
+
+    <div class="section p-d-flex p-flex-row p-align-center" *ngIf="hasRating">
+      <p class="rating-label">Оцените нас</p>
+      <p-rating [id]="formFields.rating" [formControlName]="formFields.rating" [cancel]="false" [stars]="5"></p-rating>
+    </div>
+
+    <div class="section p-d-flex p-flex-row p-align-center" *ngIf="hasNumberOfAffected">
+      <p class="rating-label">Какое количество пользователей затронуто проблемой, описанной выше:</p>
+      <p-inputNumber
+        [showButtons]="true"
+        buttonLayout="horizontal"
+        [incrementButtonIcon]="icons.increment"
+        incrementButtonClass="p-button-success"
+        [decrementButtonIcon]="icons.decrement"
+        decrementButtonClass="p-button-danger"
+        [step]="1"
+        mode="decimal"
+        [min]="0"
+        [id]="formFields.numberOfAffected"
+        [formControlName]="formFields.numberOfAffected"
+      ></p-inputNumber>
+    </div>
+
+    <div class="section p-d-flex p-flex-row p-align-center" *ngIf="hasUrgency">
+      <p class="rating-label">Укажите, насколько срочно это необходимо:</p>
+      <p-dropdown
+        class="role p-col-12 p-md-6 p-m-0 p-p-0"
+        [options]="urgenciesForUI"
+        optionLabel="label"
+        optionValue="value"
+        [placeholder]="'Срочность'"
+        [id]="formFields.urgency"
+        [formControlName]="formFields.urgency"
+      ></p-dropdown>
+    </div>
+
+    <div class="buttons-container p-d-flex p-jc-around">
+      <p-button
+        [label]="'В черновики'"
+        [icon]="icons.draft"
+        [disabled]="!isFormValid"
+        (click)="draft()"
+        styleClass="button p-button-secondary"
+      ></p-button>
+
+      <p-button
+        [label]="'Отправить'"
+        [icon]="icons.save"
+        [disabled]="!isFormValid"
+        (click)="save()"
+        styleClass="button p-button"
+      ></p-button>
+    </div>
+  </form>
+</app-page-container>

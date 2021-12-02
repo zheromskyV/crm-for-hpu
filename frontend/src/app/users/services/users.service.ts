@@ -23,6 +23,10 @@ export class UsersService {
     private readonly rolesService: RolesService
   ) {}
 
+  static mapToUserInfo([user, role]: [User, Role]): UserInfo {
+    return { ...omit(user, ['roleId']), role };
+  }
+
   getMe$(): Observable<Nullable<User>> {
     return this.http.get<User>(`${BASE_API_URL}/users/me`).pipe(catchError(() => of(null)));
   }
@@ -40,7 +44,7 @@ export class UsersService {
   getUserInfo$(): Observable<UserInfo> {
     return this.store.select(FromAuth.getCurrentUser).pipe(
       switchMap((user: User) => zip(of(user), this.rolesService.getById$(user.roleId))),
-      map(([user, role]: [User, Role]) => ({ ...omit(user, ['roleId']), role }))
+      map(UsersService.mapToUserInfo)
     );
   }
 }

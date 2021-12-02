@@ -39,3 +39,11 @@ input {
 .p-md-4 {
   padding: 0;
 }
+
+.pi-star::before {
+  content: '\e936';
+}
+
+.pi-star-o::before {
+  content: '\e937';
+}

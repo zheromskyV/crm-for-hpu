@@ -1,4 +1,5 @@
 import { RequestStatuses, RequestTypes } from '../models/request';
+import { Role } from './roles';
 
 export enum RequestStatus {
   Opened = 'opened',
@@ -36,3 +37,10 @@ export const initialRequestTypesData: RequestTypes = {
   [RequestType.Feature]: '',
   [RequestType.Email]: '',
 };
+
+export const urgenciesForUI = [
+  { value: RequestUrgency.Low, label: 'Низкая' },
+  { value: RequestUrgency.Medium, label: 'Стандартная' },
+  { value: RequestUrgency.High, label: 'Высокая' },
+  { value: RequestUrgency.Urgent, label: 'Чрезвчайная' },
+];

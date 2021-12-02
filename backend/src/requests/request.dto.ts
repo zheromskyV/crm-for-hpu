@@ -15,7 +15,20 @@ export interface GetRequestDto {
   feeds: GetFeedDto[];
   mailTo?: string;
   subject?: string;
-  linkedRequestCode?: string;
+  linkedRequestCode?: number;
+  researchParticipation?: boolean;
+  rating?: number;
+  numberOfAffected?: number;
+}
+
+export interface CreateRequestDto {
+  message: string;
+  urgency: number;
+  statusId: string;
+  typeId: string;
+  mailTo?: string;
+  subject?: string;
+  linkedRequestCode?: number;
   researchParticipation?: boolean;
   rating?: number;
   numberOfAffected?: number;

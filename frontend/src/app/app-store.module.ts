@@ -6,6 +6,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthStoreModule } from './auth/store/auth-store.module';
 import { CoreStoreModule } from './core/store/core-store.module';
 import { UsersStoreModule } from './users/store/users-store.module';
+import { RequestsStoreModule } from './requests/store/requests-store.module';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { UsersStoreModule } from './users/store/users-store.module';
     AuthStoreModule,
     CoreStoreModule,
     UsersStoreModule,
+    RequestsStoreModule,
   ],
 })
 export class AppStoreModule {}

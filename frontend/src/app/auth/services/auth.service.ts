@@ -15,13 +15,13 @@ export class AuthService {
 
   constructor(private readonly http: HttpClient, private readonly storageService: StorageService) {}
 
-  login(email: string, password: string): Observable<JwtToken> {
+  login$(email: string, password: string): Observable<JwtToken> {
     return this.http
       .post<JwtToken>(`${BASE_API_URL}/auth/login`, { email, password })
       .pipe(catchError(() => of({ token: '' })));
   }
 
-  register(user: CreateUserBackendModel): Observable<JwtToken> {
+  register$(user: CreateUserBackendModel): Observable<JwtToken> {
     return this.http
       .post<JwtToken>(`${BASE_API_URL}/auth/register`, { ...user })
       .pipe(catchError(() => of({ token: '' })));

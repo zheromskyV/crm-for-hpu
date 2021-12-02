@@ -1,0 +1,54 @@
+@import '~src/styles/style-import';
+
+:host {
+  display: block;
+}
+
+.form {
+  width: 45rem;
+  margin: 2rem auto;
+}
+
+.section {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.message-field {
+  p {
+    margin: 0 0 0.5rem;
+  }
+
+  textarea {
+    resize: none;
+    width: 100%;
+  }
+}
+
+.field input {
+  height: 2.5rem;
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+.buttons-container {
+  width: 100%;
+  margin: 1.5rem 0;
+  padding: 0 2rem;
+}
+
+.rating-label {
+  margin: 0 1rem 0 0;
+}
+
+:host ::ng-deep {
+  .p-button {
+    &.button {
+      width: 14rem;
+    }
+  }
+
+  .p-dropdown {
+    width: 100%;
+  }
+}

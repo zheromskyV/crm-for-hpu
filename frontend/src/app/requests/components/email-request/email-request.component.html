@@ -1,2 +1,7 @@
-<app-request></app-request>
-<p>email-request works!</p>
+<app-request
+  [requestType]="requestType"
+  [header]="'Отправить письмо'"
+  [hasSubject]="true"
+  [hasMailTo]="true"
+  [hasLinkedIssueCode]="true"
+></app-request>

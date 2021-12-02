@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { RequestType } from '../../../constants/requsts';
 
 @Component({
   selector: 'app-email-request',
   templateUrl: './email-request.component.html',
   styleUrls: ['./email-request.component.scss'],
 })
-export class EmailRequestComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class EmailRequestComponent {
+  readonly requestType = RequestType.Email;
 }
