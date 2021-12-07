@@ -11,7 +11,7 @@ export type Config = {
 
 export type Nullable<T> = T | null | undefined;
 
-export interface ConfigServiceUser {
+export interface ConfigServiceConsumer {
   getById$(id: string): Observable<unknown>;
   load$(): Observable<unknown>;
 }

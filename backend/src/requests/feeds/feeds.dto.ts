@@ -6,3 +6,8 @@ export interface GetFeedDto {
   createdAt: Date;
   createdBy: GetUserDto;
 }
+
+export interface CreateFeedDto {
+  message: string;
+  requestId: string;
+}

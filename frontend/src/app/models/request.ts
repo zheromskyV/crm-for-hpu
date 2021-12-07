@@ -51,6 +51,10 @@ export interface RequestInfo extends Omit<Request, 'statusId' | 'typeId' | 'feed
   assignedTo: UserInfo;
 }
 
+export interface CreateFeedBackendModel extends Omit<Feed, 'id' | 'createdBy' | 'createdAt'> {
+  requestId: string;
+}
+
 export interface FeedInfo extends Omit<Feed, 'createdBy'> {
   createdBy: UserInfo;
 }

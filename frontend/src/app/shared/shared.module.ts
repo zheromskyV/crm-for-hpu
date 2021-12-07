@@ -10,9 +10,12 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { RatingModule } from 'primeng/rating';
+import { StdDatePipe } from './pipes/std-date.pipe';
+import { TableCaptionComponent } from './components/table-caption/table-caption.component';
+import { EllipsisPipe } from './pipes/ellipsis.pipe';
 
 @NgModule({
-  declarations: [PageContainerComponent],
+  declarations: [PageContainerComponent, StdDatePipe, EllipsisPipe, TableCaptionComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -39,6 +42,9 @@ import { RatingModule } from 'primeng/rating';
     PageContainerComponent,
     CalendarModule,
     RatingModule,
+    StdDatePipe,
+    EllipsisPipe,
+    TableCaptionComponent,
   ],
 })
 export class SharedModule {}

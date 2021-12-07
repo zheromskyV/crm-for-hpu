@@ -5,10 +5,10 @@ import { Repository } from 'typeorm';
 import { ConfigService } from '../../core/config/config.service';
 import { isEmpty } from 'lodash';
 import { GetTypesConfigDto } from './types.dto';
-import { ConfigServiceUser } from '../../core/config/config.interface';
+import { ConfigServiceConsumer } from '../../core/config/config.interface';
 
 @Injectable()
-export class TypesService implements ConfigServiceUser {
+export class TypesService implements ConfigServiceConsumer {
   private types: Type[] = [];
 
   constructor(

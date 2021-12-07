@@ -1,1 +1,58 @@
-<p>view-requests-table works!</p>
+<p-table
+  #table
+  [value]="requests | slice: 0"
+  dataKey="id"
+  [rowHover]="true"
+  [rows]="10"
+  [paginator]="true"
+  [globalFilterFields]="['code', 'assignedTo.email', 'message']"
+>
+  <ng-template pTemplate="caption">
+    <app-table-caption [table]="table"></app-table-caption>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="code">
+        Код
+        <p-sortIcon field="code"></p-sortIcon>
+      </th>
+      <th pSortableColumn="type">
+        Тип
+        <p-sortIcon field="type"></p-sortIcon>
+      </th>
+      <th pSortableColumn="status">
+        Статус
+        <p-sortIcon field="status"></p-sortIcon>
+      </th>
+      <th pSortableColumn="agent">
+        Агент
+        <p-sortIcon field="agent"></p-sortIcon>
+      </th>
+      <th pSortableColumn="createdAt">
+        Создано
+        <p-sortIcon field="createdAt"></p-sortIcon>
+      </th>
+      <th pSortableColumn="updatedAt">
+        Обновлен
+        <p-sortIcon field="updatedAt"></p-sortIcon>
+      </th>
+      <th pSortableColumn="message">
+        Содержание
+        <p-sortIcon field="message"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-request>
+    <tr (click)="handleRowClick(request)">
+      <td>{{ request.code }}</td>
+      <td>{{ getType(request) }}</td>
+      <td>{{ getStatus(request) }}</td>
+      <td>{{ request.assignedTo?.email || '-' }}</td>
+      <td>{{ request.createdAt | date: 'short' }}</td>
+      <td>{{ request.updatedAt | date: 'short' }}</td>
+      <td>{{ request.message | ellipsis }}</td>
+    </tr>
+  </ng-template>
+</p-table>

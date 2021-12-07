@@ -1,0 +1,40 @@
+@import '~src/styles/style-import';
+
+.dialog-content {
+  width: 55rem;
+  min-height: 15rem;
+}
+
+.feed-comment {
+  background-color: $feed-background-color;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+  @extend %subtle-shadow;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.rating-label {
+  margin: 0 1rem 0 0;
+}
+
+.new-comment-field {
+  p {
+    margin: 0 0 0.5rem;
+  }
+
+  textarea {
+    resize: none;
+    width: 100%;
+  }
+}
+
+.buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0;
+}

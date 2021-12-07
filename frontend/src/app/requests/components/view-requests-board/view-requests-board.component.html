@@ -1,1 +1,50 @@
-<p>view-requests-board works!</p>
+<div class="board">
+  <div class="column">
+    <p class="title">Открытые</p>
+    <ng-container
+      *ngFor="let request of openedRequests"
+      [ngTemplateOutlet]="card"
+      [ngTemplateOutletContext]="{ request: request }"
+    ></ng-container>
+  </div>
+
+  <div class="column">
+    <p class="title">В процессе</p>
+    <ng-container
+      *ngFor="let request of inProgressRequests"
+      [ngTemplateOutlet]="card"
+      [ngTemplateOutletContext]="{ request: request }"
+    ></ng-container>
+  </div>
+
+  <div class="column">
+    <p class="title">Закрытые</p>
+    <ng-container
+      *ngFor="let request of closedRequests"
+      [ngTemplateOutlet]="card"
+      [ngTemplateOutletContext]="{ request: request }"
+    ></ng-container>
+  </div>
+
+  <div class="column">
+    <p class="title">Черновики</p>
+    <ng-container
+      *ngFor="let request of draftRequests"
+      [ngTemplateOutlet]="card"
+      [ngTemplateOutletContext]="{ request: request }"
+    ></ng-container>
+  </div>
+</div>
+
+<ng-template #card let-request="request">
+  <div class="card" (click)="handleCardClick(request)">
+    <div class="p-d-flex p-flex-row p-jc-between">
+      <div class="p-text-italic">#{{ request.code }}</div>
+      <div class="p-text-bold p-mx-1">{{ getType(request) }}</div>
+    </div>
+    <p>{{ request.message | ellipsis: 20 }}</p>
+    <div class="p-d-flex p-flex-row p-jc-end">
+      <div class="p-text-light">{{ request.createdAt | date: 'short' }}</div>
+    </div>
+  </div>
+</ng-template>

@@ -1,5 +1,4 @@
 import { RequestStatuses, RequestTypes } from '../models/request';
-import { Role } from './roles';
 
 export enum RequestStatus {
   Opened = 'opened',
@@ -42,5 +41,20 @@ export const urgenciesForUI = [
   { value: RequestUrgency.Low, label: 'Низкая' },
   { value: RequestUrgency.Medium, label: 'Стандартная' },
   { value: RequestUrgency.High, label: 'Высокая' },
-  { value: RequestUrgency.Urgent, label: 'Чрезвчайная' },
+  { value: RequestUrgency.Urgent, label: 'Чрезвычайная' },
 ];
+
+export const typeLabelsForUI = {
+  [RequestType.Incident]: 'Заявка',
+  [RequestType.Feedback]: 'Отзыв',
+  [RequestType.Bug]: 'Сообщение о проблеме',
+  [RequestType.Feature]: 'Запрос улучшения',
+  [RequestType.Email]: 'Письмо',
+};
+
+export const statusLabelsForUI = {
+  [RequestStatus.Opened]: 'Открытый',
+  [RequestStatus.InProgress]: 'В процессе',
+  [RequestStatus.Closed]: 'Закрытый',
+  [RequestStatus.Draft]: 'Черновик',
+};

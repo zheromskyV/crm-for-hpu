@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FromCore } from '../store/core.selectors';
 import { ConfigService } from './config.service';
-import { ConfigServiceUser } from '../../models/core';
+import { ConfigServiceConsumer } from '../../models/core';
 import { initialRequestStatusesData, RequestStatus } from '../../constants/requsts';
 import { RequestStatuses, RequestStatusesConfig } from '../../models/request';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RequestStatusesService implements ConfigServiceUser {
+export class RequestStatusesService implements ConfigServiceConsumer {
   constructor(private readonly configService: ConfigService) {}
 
   public getById$(statusId: string): Observable<RequestStatus> {

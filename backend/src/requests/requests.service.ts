@@ -11,6 +11,7 @@ import { StatusesService } from './statuses/statuses.service';
 import { Type } from './types/type.entity';
 import { TypesService } from './types/types.service';
 import { User } from '../users/user.entity';
+import { Feed } from './feeds/feed.entity';
 
 @Injectable()
 export class RequestsService {
@@ -49,6 +50,14 @@ export class RequestsService {
       type,
       createdBy,
     });
+  }
+
+  async addFeed(feed: Feed, requestId: string): Promise<void> {
+    const request: Request = await this.requestRepo.findOneOrFail({ id: requestId }, { relations: this.relations });
+
+    request.feeds.push(feed);
+
+    await this.requestRepo.save({ ...request });
   }
 
   mapToSend(request: Request): GetRequestDto {

@@ -8,24 +8,23 @@ import { NavigationService } from '../../../core/services/navigation.service';
 import { MIN_PASSWORD_LENGTH } from '../../auth.constants';
 import { AuthActions } from '../../store/auth.actions';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  icons = {
+  readonly icons = {
     login: PrimeIcons.USER,
     password: PrimeIcons.EYE_SLASH,
     signIn: PrimeIcons.SIGN_IN,
     signUp: PrimeIcons.PLUS,
   };
-  formGroup!: FormGroup;
-  formFields = {
+  readonly formFields = {
     login: 'login',
     password: 'password',
   };
+  formGroup!: FormGroup;
 
   private readonly subscriptions = new Subscription();
 

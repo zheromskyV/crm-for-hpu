@@ -4,12 +4,12 @@ import { initialRolesData, Role } from '../../constants/roles';
 import { Observable } from 'rxjs';
 import { FromCore } from '../store/core.selectors';
 import { ConfigService } from './config.service';
-import { ConfigServiceUser } from '../../models/core';
+import { ConfigServiceConsumer } from '../../models/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RolesService implements ConfigServiceUser {
+export class RolesService implements ConfigServiceConsumer {
   constructor(private readonly configService: ConfigService) {}
 
   public getById$(roleId: string): Observable<Role> {

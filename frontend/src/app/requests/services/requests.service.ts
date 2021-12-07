@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { combineLatest, Observable, of, zip } from 'rxjs';
+import { combineLatest, from, Observable, of } from 'rxjs';
 import { BASE_API_URL } from '../../constants/api';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, toArray } from 'rxjs/operators';
 import {
+  CreateFeedBackendModel,
   CreateRequestBackendModel,
   CreateRequestModel,
   Feed,
@@ -76,17 +77,22 @@ export class RequestsService {
     return this.http.post<Request>(`${BASE_API_URL}/requests`, { ...request }).pipe(catchError(() => of(null)));
   }
 
+  addFeed$(feed: CreateFeedBackendModel): Observable<Nullable<Feed>> {
+    return this.http.post<Feed>(`${BASE_API_URL}/requests/feeds`, { ...feed }).pipe(catchError(() => of(null)));
+  }
+
   getForUser$(userId: string): Observable<Request[]> {
     return this.http.get<Request[]>(`${BASE_API_URL}/requests?userId=${userId}`).pipe(catchError(() => of([])));
   }
 
   getRequestsInfo$(): Observable<RequestInfo[]> {
     return this.store.select(FromRequests.getRequests).pipe(
-      switchMap((requests: Request[]) =>
-        combineLatest(
-          requests.map((request: Request) =>
-            zip(...this.getDataForRequestInfo(request)).pipe(map(RequestsService.mapToRequestInfo))
-          )
+      mergeMap((requests) =>
+        from(requests).pipe(
+          filter((request) => !!request),
+          mergeMap((request) => combineLatest(this.getDataForRequestInfo(request))),
+          map(RequestsService.mapToRequestInfo),
+          toArray()
         )
       )
     );
@@ -109,8 +115,11 @@ export class RequestsService {
       this.requestStatusesService.getById$(request.statusId),
       this.requestTypesService.getById$(request.typeId),
       this.rolesService.getById$(request.createdBy.roleId),
-      this.rolesService.getById$(request.assignedTo?.roleId || ''),
-      zip(...request.feeds.map(({ createdBy }: Feed) => this.rolesService.getById$(createdBy.roleId))),
+      this.rolesService.getById$(request.assignedTo?.roleId || 'xxx'),
+      from(request.feeds).pipe(
+        mergeMap(({ createdBy }) => this.rolesService.getById$(createdBy.roleId)),
+        toArray()
+      ),
     ];
   }
 }

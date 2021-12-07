@@ -17,7 +17,7 @@ import { AuthActions } from '../../../auth/store/auth.actions';
   styleUrls: ['./navigation-bar.component.scss'],
 })
 export class NavigationBarComponent implements OnInit, OnDestroy {
-  icons = {
+  readonly icons = {
     logo: PrimeIcons.SITEMAP,
     signOut: PrimeIcons.SIGN_OUT,
   };

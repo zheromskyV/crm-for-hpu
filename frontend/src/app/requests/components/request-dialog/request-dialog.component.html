@@ -1,0 +1,130 @@
+<p-dialog
+  [(visible)]="isDialogVisible"
+  [header]="'Подробности'"
+  styleClass="form-dialog"
+  [modal]="true"
+  [draggable]="false"
+  (onHide)="cancel()"
+>
+  <ng-template pTemplate="content">
+    <div class="dialog-content">
+      <p-fieldset legend="Общая информация" [toggleable]="true">
+        <div class="general-info p-grid">
+          <div class="p-col-12 p-md-6">
+            <div class="p-grid">
+              <p class="p-col-12 p-md-3 p-my-2">Код:</p>
+              <p class="p-col-12 p-md-9 p-my-2">{{ currentRequestInfo.code }}</p>
+            </div>
+            <div class="p-grid">
+              <p class="p-col-12 p-md-3 p-my-2">Тип:</p>
+              <p class="p-col-12 p-md-9 p-my-2">{{ currentType }}</p>
+            </div>
+            <div class="p-grid">
+              <p class="p-col-12 p-md-3 p-my-2">Статус:</p>
+              <p class="p-col-12 p-md-9 p-my-2">{{ currentStatus }}</p>
+            </div>
+            <div class="p-grid">
+              <p class="p-col-12 p-md-3 p-my-2">Срочность:</p>
+              <p class="p-col-12 p-md-9 p-my-2">{{ currentUrgency }}</p>
+            </div>
+          </div>
+
+          <div class="p-col-12 p-md-6">
+            <div class="p-grid">
+              <p class="p-col-12 p-md-3 p-my-2">Клиент:</p>
+              <p class="p-col-12 p-md-9 p-my-2">{{ currentRequestInfo.createdBy.email }}</p>
+            </div>
+            <div class="p-grid">
+              <p class="p-col-12 p-md-3 p-my-2">Агент:</p>
+              <p class="p-col-12 p-md-9 p-my-2">{{ currentRequestInfo.assignedTo.email || 'Еще не установлено' }}</p>
+            </div>
+            <div class="p-grid">
+              <p class="p-col-12 p-md-3 p-my-2">Создано:</p>
+              <p class="p-col-12 p-md-9 p-my-2">{{ currentRequestInfo.createdAt | stdDate }}</p>
+            </div>
+            <div class="p-grid">
+              <p class="p-col-12 p-md-3 p-my-2">Обновлено:</p>
+              <p class="p-col-12 p-md-9 p-my-2">{{ currentRequestInfo.updatedAt | stdDate }}</p>
+            </div>
+          </div>
+        </div>
+      </p-fieldset>
+      <br />
+
+      <p-fieldset legend="Детали" [toggleable]="true">
+        <p class="p-text-bold">{{ currentRequestInfo.message }}</p>
+
+        <ng-container *ngIf="isEmailType">
+          <p>
+            Отправлено: <b>{{ currentRequestInfo.mailTo }}</b>
+          </p>
+          <p>
+            Тема: <b>{{ currentRequestInfo.subject }}</b>
+          </p>
+          <p>
+            Код связанного запроса: <b>{{ currentRequestInfo.linkedRequestCode || 'Нет' }}</b>
+          </p>
+        </ng-container>
+
+        <ng-container *ngIf="isFeedbackType">
+          <p>
+            Отзыв как часть исследования:
+            <i class="{{ currentRequestInfo.researchParticipation ? icons.yes : icons.no }}"></i>
+          </p>
+          <div class="section p-d-flex p-flex-row p-align-center">
+            <p class="rating-label">Оценка:</p>
+            <p-rating [ngModel]="currentRequestInfo.rating" [readonly]="true" [cancel]="false" [stars]="5"></p-rating>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isBugType">
+          <p>
+            Количество затронутых пользователей: <b>{{ currentRequestInfo.numberOfAffected }}</b>
+          </p>
+        </ng-container>
+      </p-fieldset>
+      <br />
+
+      <p-fieldset legend="Комментарии" [toggleable]="true">
+        <div *ngFor="let feed of currentRequestInfo.feeds" class="p-d-flex feed-comment">
+          <p-avatar
+            class="p-mr-3"
+            [icon]="getFeedIcon(feed)"
+            [size]="'large'"
+            [shape]="'circle'"
+            [style]="{ 'background-color': '#2196F3', color: '#ffffff' }"
+          ></p-avatar>
+          <div class="p-grid p-flex-column">
+            <p class="p-my-2 p-text-bold">{{ feed.createdBy.email }}</p>
+            <p class="p-my-1 p-text-italic">{{ feed.createdAt | stdDate }}</p>
+            <p>{{ feed.message }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="!currentRequestInfo.feeds.length">
+          <p>Комментариев пока нет</p>
+        </div>
+
+        <p-divider></p-divider>
+
+        <div class="new-comment-field">
+          <p>Добавить новый комментарий</p>
+          <textarea pInputTextarea [(ngModel)]="newComment" rows="5"></textarea>
+        </div>
+
+        <div class="buttons-container">
+          <p-button
+            [label]="'Отправить'"
+            [icon]="icons.addComment"
+            [disabled]="!newComment.length"
+            (click)="addComment()"
+            styleClass="button p-button"
+          ></p-button>
+        </div>
+      </p-fieldset>
+      <br />
+
+<!--      <div class="buttons-container"></div>-->
+    </div>
+  </ng-template>
+</p-dialog>

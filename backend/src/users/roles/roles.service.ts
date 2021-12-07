@@ -5,10 +5,10 @@ import { Repository } from 'typeorm';
 import { GetRolesConfigDto } from './roles.dto';
 import { isEmpty } from 'lodash';
 import { ConfigService } from '../../core/config/config.service';
-import { ConfigServiceUser } from '../../core/config/config.interface';
+import { ConfigServiceConsumer } from '../../core/config/config.interface';
 
 @Injectable()
-export class RolesService implements ConfigServiceUser {
+export class RolesService implements ConfigServiceConsumer {
   private roles: Role[] = [];
 
   constructor(

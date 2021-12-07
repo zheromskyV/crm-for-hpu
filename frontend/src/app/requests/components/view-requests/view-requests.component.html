@@ -1,3 +1,17 @@
-{{ requests$ | async }}
-<app-view-requests-board></app-view-requests-board>
-<app-view-requests-table></app-view-requests-table>
+<app-page-container [header]="'Мои запросы'">
+  <p-tabView>
+    <p-tabPanel [header]="'Таблица'">
+      <app-view-requests-table [requests]="requests" (rowClicked)="showDialog($event)"></app-view-requests-table>
+    </p-tabPanel>
+
+    <p-tabPanel [header]="'Доска'">
+      <app-view-requests-board [requests]="requests" (cardClicked)="showDialog($event)"></app-view-requests-board>
+    </p-tabPanel>
+  </p-tabView>
+</app-page-container>
+
+<app-request-dialog
+  [currentRequestInfo]="currentRequestInfo"
+  [(isDialogVisible)]="isDialogVisible"
+  (submitFeed)="submitFeed($event)"
+></app-request-dialog>

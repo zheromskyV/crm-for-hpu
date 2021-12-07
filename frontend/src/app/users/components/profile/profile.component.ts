@@ -10,7 +10,7 @@ import { UsersService } from '../../services/users.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  icons = {
+  readonly icons = {
     edit: PrimeIcons.PENCIL,
   };
 

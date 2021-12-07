@@ -31,8 +31,8 @@ export class RequestComponent implements OnInit {
   @Input() hasNumberOfAffected = false;
   @Input() hasUrgency = false;
 
-  urgenciesForUI = urgenciesForUI;
-  icons = {
+  readonly urgenciesForUI = urgenciesForUI;
+  readonly icons = {
     mailTo: PrimeIcons.ENVELOPE,
     subject: PrimeIcons.FILE,
     linkedIssueCode: PrimeIcons.LINK,
@@ -43,7 +43,7 @@ export class RequestComponent implements OnInit {
   };
 
   formGroup!: FormGroup;
-  formFields = {
+  readonly formFields = {
     message: 'message',
     subject: 'subject',
     mailTo: 'mailTo',

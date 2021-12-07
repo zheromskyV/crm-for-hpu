@@ -11,7 +11,7 @@ export type Configurable = Role | Type | Status;
 
 export type ConfigMappable = Configurable[];
 
-export interface ConfigServiceUser {
+export interface ConfigServiceConsumer {
   getConfig(): Promise<unknown>;
   getById(id: string): Promise<Configurable>;
   sync(): Promise<void>;

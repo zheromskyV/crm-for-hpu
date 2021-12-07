@@ -3,12 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ConfigService } from '../../core/config/config.service';
 import { isEmpty } from 'lodash';
-import { ConfigServiceUser } from '../../core/config/config.interface';
+import { ConfigServiceConsumer } from '../../core/config/config.interface';
 import { Status } from './status.entity';
 import { GetStatusesConfigDto } from './statuses.dto';
 
 @Injectable()
-export class StatusesService implements ConfigServiceUser {
+export class StatusesService implements ConfigServiceConsumer {
   private statuses: Status[] = [];
 
   constructor(

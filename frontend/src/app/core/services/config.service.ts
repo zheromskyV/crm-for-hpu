@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { BASE_API_URL } from '../../constants/api';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, take } from 'rxjs/operators';
 import { cloneDeep } from 'lodash';
 import { Config } from '../../models/core';
 import { MemoizedSelector, Store } from '@ngrx/store';
@@ -28,7 +28,8 @@ export class ConfigService {
         }
 
         return fallback;
-      })
+      }),
+      take(1)
     );
   }
 

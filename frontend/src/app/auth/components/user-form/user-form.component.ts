@@ -25,8 +25,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   @Output() stopEditing = new EventEmitter<void>();
 
-  rolesForDropdown = rolesForDropdown;
-  icons = {
+  readonly rolesForDropdown = rolesForDropdown;
+  readonly icons = {
     email: PrimeIcons.ENVELOPE,
     password: PrimeIcons.KEY,
     role: PrimeIcons.ANDROID,
@@ -41,7 +41,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   };
 
   formGroup!: FormGroup;
-  formFields = {
+  readonly formFields = {
     login: 'login',
     password: 'password',
     role: 'role',

@@ -12,6 +12,12 @@ import { ViewRequestsTableComponent } from './components/view-requests-table/vie
 import { ViewRequestsBoardComponent } from './components/view-requests-board/view-requests-board.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
+import { RequestDialogComponent } from './components/request-dialog/request-dialog.component';
+import { DialogModule } from 'primeng/dialog';
+import { FieldsetModule } from 'primeng/fieldset';
+import { AvatarModule } from 'primeng/avatar';
+import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   declarations: [
@@ -24,7 +30,18 @@ import { CheckboxModule } from 'primeng/checkbox';
     ViewRequestsComponent,
     ViewRequestsTableComponent,
     ViewRequestsBoardComponent,
+    RequestDialogComponent,
   ],
-  imports: [SharedModule, RequestsRoutingModule, InputNumberModule, CheckboxModule],
+  imports: [
+    SharedModule,
+    RequestsRoutingModule,
+    InputNumberModule,
+    CheckboxModule,
+    DialogModule,
+    FieldsetModule,
+    AvatarModule,
+    TableModule,
+    TabViewModule,
+  ],
 })
 export class RequestsModule {}
