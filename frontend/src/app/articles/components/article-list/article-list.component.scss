@@ -1,0 +1,30 @@
+@import '~src/styles/style-import';
+
+:host {
+  display: block;
+}
+
+.article-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  max-height: 39rem;
+  overflow: auto;
+
+  &-item {
+    padding: 1rem;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: capitalize;
+    @extend %subtle-shadow;
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    &:hover {
+      background-color: darken($background-color, 3%);
+      transition: all ease-out .2s;
+    }
+  }
+}

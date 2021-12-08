@@ -1,0 +1,7 @@
+<ul class="article-list">
+  <li class="article-list-item" *ngFor="let article of articles" (click)="handleArticleClick(article)">
+    {{ article.title | ellipsis: 20 }}
+  </li>
+</ul>
+
+<p *ngIf="!articles.length" class="p-text-bold p-text-center">Не найдено</p>

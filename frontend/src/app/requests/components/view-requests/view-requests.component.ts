@@ -4,6 +4,7 @@ import { AppState } from '../../../app.state';
 import { RequestsActions } from '../../store/requests.actions';
 import { CreateFeedBackendModel, RequestInfo } from '../../../models/request';
 import { RequestsService } from '../../services/requests.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-view-requests',
@@ -18,19 +19,23 @@ export class ViewRequestsComponent implements OnInit, OnDestroy {
 
   isDialogVisible = false;
 
+  private readonly subscriptions = new Subscription();
+
   constructor(private readonly store: Store<AppState>, private readonly requestsService: RequestsService) {}
 
   ngOnInit(): void {
     this.store.dispatch(RequestsActions.loadAllRequests());
 
-    this.requestsService.getRequestsInfo$().subscribe((requests: RequestInfo[]) => {
-      console.log(requests);
-      this.requests = requests;
-      this.setCurrentRequestInfo();
-    });
+    this.subscriptions.add(
+      this.requestsService.getRequestsInfo$().subscribe((requests: RequestInfo[]) => {
+        this.requests = requests;
+        this.setCurrentRequestInfo();
+      })
+    );
   }
 
   ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
     this.store.dispatch(RequestsActions.clearRequests());
   }
 

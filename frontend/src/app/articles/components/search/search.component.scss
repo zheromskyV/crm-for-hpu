@@ -1,0 +1,12 @@
+@import '~src/styles/style-import';
+
+:host {
+  display: block;
+  padding: 0.5rem;
+}
+
+.search {
+  width: 100%;
+
+  @extend %subtle-shadow;
+}

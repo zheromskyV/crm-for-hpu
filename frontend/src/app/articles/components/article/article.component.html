@@ -1,0 +1,17 @@
+<div class="article-holder">
+  <ng-container *ngIf="article; then articleBody; else noArticle"></ng-container>
+</div>
+
+<ng-template #articleBody>
+  <h3 class="p-text-capitalize">{{ article!.title }}</h3>
+  <p-divider></p-divider>
+
+  <p class="p-text-italic">{{ article!.summary }}</p>
+  <p-divider></p-divider>
+
+  <p>{{ article!.body }}</p>
+</ng-template>
+
+<ng-template #noArticle>
+  <p class="p-text-center p-text-bold">Выберите статью</p>
+</ng-template>

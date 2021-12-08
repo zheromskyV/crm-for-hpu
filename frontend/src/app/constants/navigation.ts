@@ -59,7 +59,7 @@ const chatNavLink: NavigationLink = {
 
 const helpArticlesNavLink: NavigationLink = {
   name: 'Полезные статьи',
-  url: 'helpArticlesNavLink',
+  url: routerPaths.articles.home,
   icon: PrimeIcons.QUESTION_CIRCLE,
 };
 

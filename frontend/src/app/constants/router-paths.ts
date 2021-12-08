@@ -18,5 +18,8 @@ export const routerPaths = {
     home: 'users',
     profile: 'my-profile',
   },
+  articles: {
+    home: 'articles',
+  },
   notFound: 'not-found',
 };

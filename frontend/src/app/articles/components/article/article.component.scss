@@ -1,0 +1,15 @@
+@import '~src/styles/style-import';
+
+:host {
+  display: block;
+  padding: 0.5rem;
+}
+
+.article-holder {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 3px;
+  max-height: 35rem;
+  overflow: auto;
+  @extend %subtle-shadow;
+}

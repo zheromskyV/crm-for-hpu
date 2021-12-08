@@ -1,5 +1,6 @@
 export enum StoreFeature {
   Auth = 'auth',
   Core = 'core',
-  Requests = 'requests'
+  Requests = 'requests',
+  Articles = 'articles',
 }

@@ -1,0 +1,10 @@
+<span class="p-input-icon-left search">
+  <i class="pi pi-search"></i>
+  <input
+    type="text"
+    pInputText
+    placeholder="Найдите интересующие вас статьи"
+    [ngModel]="query"
+    (ngModelChange)="handleQueryChange($event)"
+  />
+</span>

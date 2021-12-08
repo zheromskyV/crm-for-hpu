@@ -1,0 +1,11 @@
+<app-page-container [header]="'Полезные статьи'">
+  <div class="p-grid">
+    <div class="p-col-12 p-md-3">
+      <app-article-list [articles]="articles" (articleClicked)="selectArticle($event)"></app-article-list>
+    </div>
+    <div class="p-col-12 p-md-9">
+      <app-search [(query)]="query"></app-search>
+      <app-article [article]="selectedArticle"></app-article>
+    </div>
+  </div>
+</app-page-container>
