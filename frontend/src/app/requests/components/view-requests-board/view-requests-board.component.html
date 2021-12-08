@@ -40,7 +40,7 @@
   <div class="card" (click)="handleCardClick(request)">
     <div class="p-d-flex p-flex-row p-jc-between">
       <div class="p-text-italic">#{{ request.code }}</div>
-      <div class="p-text-bold p-mx-1">{{ getType(request) }}</div>
+      <div class="p-text-bold p-mx-1 p-text-right">{{ getType(request) }}</div>
     </div>
     <p>{{ request.message | ellipsis: 20 }}</p>
     <div class="p-d-flex p-flex-row p-jc-end">

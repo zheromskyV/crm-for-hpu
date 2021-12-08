@@ -15,8 +15,10 @@
   display: flex;
   flex-direction: column;
   border-radius: 3px;
-  background-color: $board-column-background-color;
+  background-color: $shaded-background-color;
   padding: 1rem;
+  max-height: 40rem;
+  overflow: auto;
   @extend %subtle-shadow;
 
   &:not(:last-child) {
