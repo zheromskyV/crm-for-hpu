@@ -73,16 +73,16 @@ export class RequestsService {
     return this.http.get<Request[]>(`${BASE_API_URL}/requests`).pipe(catchError(() => of([])));
   }
 
+  getAllMine$(): Observable<Request[]> {
+    return this.http.get<Request[]>(`${BASE_API_URL}/requests/mine`).pipe(catchError(() => of([])));
+  }
+
   create$(request: CreateRequestBackendModel): Observable<Nullable<Request>> {
     return this.http.post<Request>(`${BASE_API_URL}/requests`, { ...request }).pipe(catchError(() => of(null)));
   }
 
   addFeed$(feed: CreateFeedBackendModel): Observable<Nullable<Feed>> {
     return this.http.post<Feed>(`${BASE_API_URL}/requests/feeds`, { ...feed }).pipe(catchError(() => of(null)));
-  }
-
-  getForUser$(userId: string): Observable<Request[]> {
-    return this.http.get<Request[]>(`${BASE_API_URL}/requests?userId=${userId}`).pipe(catchError(() => of([])));
   }
 
   getRequestsInfo$(): Observable<RequestInfo[]> {

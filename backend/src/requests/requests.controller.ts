@@ -30,6 +30,14 @@ export class RequestsController {
     return requests.map(this.requestsService.mapToSend.bind(this.requestsService));
   }
 
+  @Get('mine')
+  async getMine(@Req() req): Promise<GetRequestDto[]> {
+    const user: User = await this.usersService.getById(req.user?.id || '');
+    const requests: Request[] = await this.requestsService.getForUser(user);
+
+    return requests.map(this.requestsService.mapToSend.bind(this.requestsService));
+  }
+
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() requestDto: CreateRequestDto, @Req() req): Promise<GetRequestDto> {

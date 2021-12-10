@@ -13,6 +13,8 @@ import { Nullable } from '../../models/core';
 import { FromRequests } from './requests.selectors';
 import { RequestType } from '../../constants/requsts';
 import { EmailService } from '../../core/services/email.service';
+import { FromAuth } from '../../auth/store/auth.selectors';
+import { Role } from '../../constants/roles';
 
 @Injectable()
 export class RequestsEffects {
@@ -27,7 +29,10 @@ export class RequestsEffects {
   loadAllRequests$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(RequestsActions.loadAllRequests),
-      switchMap(() => this.requestsService.getAll$()),
+      withLatestFrom(this.store.select(FromAuth.getCurrentRole)),
+      switchMap(([_, userRole]) =>
+        userRole === Role.Client ? this.requestsService.getAllMine$() : this.requestsService.getAll$()
+      ),
       switchMap((requests: Request[]) => [RequestsActions.setRequests({ requests })])
     )
   );

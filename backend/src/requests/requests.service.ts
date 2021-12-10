@@ -40,6 +40,15 @@ export class RequestsService {
     return this.requestRepo.find({ relations: this.relations });
   }
 
+  async getForUser(user: User): Promise<Request[]> {
+    return this.requestRepo.find({
+      relations: this.relations,
+      where: {
+        createdBy: user,
+      },
+    });
+  }
+
   async create(requestDto: CreateRequestDto, createdBy: User): Promise<Request> {
     const status: Status = await this.statusesService.getById(requestDto.statusId);
     const type: Type = await this.typesService.getById(requestDto.typeId);
