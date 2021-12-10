@@ -1,0 +1,4 @@
+<h3>Наши номера:</h3>
+<p *ngFor="let phone of phones">
+  {{ phone.info }}: <a class="phone-number" href="tel:{{ phone.number }}">{{ phone.number }}</a>
+</p>

@@ -1,0 +1,5 @@
+<app-page-container [header]="'Позвонить нам'">
+  <app-phone-list class="call-us-item" [phones]="(phones$ | async) || []"></app-phone-list>
+  <p-divider></p-divider>
+  <app-request-call class="call-us-item" (requestCall)="requestCall($event)"></app-request-call>
+</app-page-container>

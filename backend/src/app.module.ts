@@ -6,8 +6,17 @@ import { typeOrmConfig } from './app.constants';
 import { RequestsModule } from './requests/requests.module';
 import { ArticlesModule } from './articles/articles.module';
 import { EmailModule } from './email/email.module';
+import { PhonesModule } from './phones/phones.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), UsersModule, AuthModule, RequestsModule, ArticlesModule, EmailModule],
+  imports: [
+    TypeOrmModule.forRoot(typeOrmConfig),
+    UsersModule,
+    AuthModule,
+    RequestsModule,
+    ArticlesModule,
+    EmailModule,
+    PhonesModule,
+  ],
 })
 export class AppModule {}

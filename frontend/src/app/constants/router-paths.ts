@@ -21,5 +21,8 @@ export const routerPaths = {
   articles: {
     home: 'articles',
   },
+  phones: {
+    home: 'phones',
+  },
   notFound: 'not-found',
 };

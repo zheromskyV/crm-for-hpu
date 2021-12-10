@@ -1,0 +1,16 @@
+@import '~src/styles/style-import';
+
+:host {
+  display: block;
+}
+
+.phone-number {
+  text-decoration: none;
+  margin: 0 5px;
+  letter-spacing: 1px;
+  font-weight: 500;
+
+  &:hover {
+    color: $border-focus-color;
+  }
+}

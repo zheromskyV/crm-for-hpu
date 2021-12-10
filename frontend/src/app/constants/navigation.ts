@@ -65,7 +65,7 @@ const helpArticlesNavLink: NavigationLink = {
 
 const callUsNavLink: NavigationLink = {
   name: 'Позвонить нам',
-  url: 'callUsNavLink',
+  url: routerPaths.phones.home,
   icon: PrimeIcons.PHONE,
 };
 

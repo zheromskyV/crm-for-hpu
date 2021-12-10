@@ -1,0 +1,19 @@
+<h3>Запросите звонок:</h3>
+<span>Введите ваш номер</span>
+
+<div class="p-d-flex">
+  <p-inputMask
+    class="phone-input"
+    [(ngModel)]="phone"
+    placeholder="+375 (99) 999-99-99"
+    mask="+375 (99) 999-99-99"
+  ></p-inputMask>
+
+  <p-button
+    [label]="'Запросить'"
+    [icon]="icons.phone"
+    [disabled]="!phone.length"
+    (click)="submit()"
+    styleClass="button p-button"
+  ></p-button>
+</div>

@@ -8,6 +8,7 @@ import { CoreStoreModule } from './core/store/core-store.module';
 import { UsersStoreModule } from './users/store/users-store.module';
 import { RequestsStoreModule } from './requests/store/requests-store.module';
 import { ArticlesStoreModule } from './articles/store/articles-store.module';
+import { PhonesStoreModule } from './phones/store/phones-store.module';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { ArticlesStoreModule } from './articles/store/articles-store.module';
     UsersStoreModule,
     RequestsStoreModule,
     ArticlesStoreModule,
+    PhonesStoreModule,
   ],
 })
 export class AppStoreModule {}
