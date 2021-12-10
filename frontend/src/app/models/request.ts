@@ -43,6 +43,11 @@ export interface CreateRequestBackendModel extends Omit<CreateRequestModel, 'sta
   typeId: string;
 }
 
+export interface UpdateRequestBackendModel extends CreateRequestBackendModel {
+  id: string;
+  assignedToId?: string;
+}
+
 export interface RequestInfo extends Omit<Request, 'statusId' | 'typeId' | 'feeds' | 'createdBy' | 'assignedTo'> {
   status: RequestStatus;
   type: RequestType;

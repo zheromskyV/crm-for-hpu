@@ -1,9 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CreateFeedBackendModel, FeedInfo, RequestInfo } from '../../../models/request';
-import { RequestType, statusLabelsForUI, typeLabelsForUI, urgenciesForUI } from '../../../constants/requsts';
+import {
+  RequestStatus,
+  RequestType,
+  statusLabelsForUI,
+  typeLabelsForUI,
+  urgenciesForUI,
+} from '../../../constants/requsts';
 import { PrimeIcons } from 'primeng/api';
 import { Role } from '../../../constants/roles';
 import { isEmpty } from 'lodash';
+import { UserInfo } from '../../../models/user';
 
 @Component({
   selector: 'app-request-dialog',
@@ -12,10 +19,12 @@ import { isEmpty } from 'lodash';
 })
 export class RequestDialogComponent {
   @Input() currentRequestInfo!: RequestInfo;
+  @Input() currentUserInfo!: UserInfo;
   @Input() isDialogVisible = false;
 
   @Output() isDialogVisibleChange = new EventEmitter<boolean>();
   @Output() submitFeed = new EventEmitter<CreateFeedBackendModel>();
+  @Output() updateRequest = new EventEmitter<RequestInfo>();
 
   newComment = '';
 
@@ -25,6 +34,8 @@ export class RequestDialogComponent {
     addComment: PrimeIcons.CHECK,
     yes: PrimeIcons.CHECK_CIRCLE,
     no: PrimeIcons.TIMES_CIRCLE,
+    move: PrimeIcons.ANGLE_DOUBLE_RIGHT,
+    reopen: PrimeIcons.REFRESH,
   };
 
   private readonly urgenciesForUI = urgenciesForUI;
@@ -74,5 +85,82 @@ export class RequestDialogComponent {
 
   cancel(): void {
     this.isDialogVisibleChange.emit(false);
+  }
+
+  get isMoveFromDraftToOpenedShown(): boolean {
+    return this.currentRequestInfo.status === RequestStatus.Draft && this.currentUserInfo.role === Role.Client;
+  }
+
+  moveFromDraftToOpened(): void {
+    this.updateRequest.emit({
+      ...this.currentRequestInfo,
+      status: RequestStatus.Opened,
+    });
+  }
+
+  get isMoveFromOpenedToInProgressShown(): boolean {
+    return (
+      this.currentRequestInfo.status === RequestStatus.Opened &&
+      this.currentUserInfo.role === Role.Agent &&
+      this.isCurrentRequestAssigned
+    );
+  }
+
+  moveFromOpenedToInProgress(): void {
+    this.updateRequest.emit({
+      ...this.currentRequestInfo,
+      status: RequestStatus.InProgress,
+    });
+  }
+
+  get isMoveFromInProgressToClosedShown(): boolean {
+    return this.currentRequestInfo.status === RequestStatus.InProgress && this.currentUserInfo.role === Role.Agent;
+  }
+
+  moveFromInProgressToClosed(): void {
+    this.updateRequest.emit({
+      ...this.currentRequestInfo,
+      status: RequestStatus.Closed,
+    });
+  }
+
+  get isMoveFromClosedToOpenedShown(): boolean {
+    return this.currentRequestInfo.status === RequestStatus.Closed && this.currentUserInfo.role === Role.Client;
+  }
+
+  moveFromClosedToOpened(): void {
+    this.updateRequest.emit({
+      ...this.currentRequestInfo,
+      status: RequestStatus.Opened,
+    });
+  }
+
+  get isAssignToMeShown(): boolean {
+    return (
+      !this.isCurrentRequestAssigned &&
+      this.currentUserInfo.role === Role.Agent &&
+      this.currentRequestInfo.status !== RequestStatus.Draft
+    );
+  }
+
+  assignToMe(): void {
+    this.updateRequest.emit({
+      ...this.currentRequestInfo,
+      assignedTo: this.currentUserInfo,
+    });
+  }
+
+  get isControlsSectionVisible(): boolean {
+    return (
+      this.isMoveFromDraftToOpenedShown ||
+      this.isMoveFromOpenedToInProgressShown ||
+      this.isMoveFromInProgressToClosedShown ||
+      this.isMoveFromClosedToOpenedShown ||
+      this.isAssignToMeShown
+    );
+  }
+
+  private get isCurrentRequestAssigned(): boolean {
+    return !isEmpty(this.currentRequestInfo.assignedTo.id);
   }
 }

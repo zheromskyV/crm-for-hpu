@@ -12,6 +12,7 @@ import {
   RequestInfo,
   RequestStatuses,
   RequestTypes,
+  UpdateRequestBackendModel,
 } from '../../models/request';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
@@ -81,8 +82,12 @@ export class RequestsService {
     return this.http.post<Request>(`${BASE_API_URL}/requests`, { ...request }).pipe(catchError(() => of(null)));
   }
 
-  addFeed$(feed: CreateFeedBackendModel): Observable<Nullable<Feed>> {
-    return this.http.post<Feed>(`${BASE_API_URL}/requests/feeds`, { ...feed }).pipe(catchError(() => of(null)));
+  update$(request: UpdateRequestBackendModel): Observable<Nullable<Request>> {
+    return this.http.put<Request>(`${BASE_API_URL}/requests`, { ...request }).pipe(catchError(() => of(null)));
+  }
+
+  addFeed$(feed: CreateFeedBackendModel): Observable<Nullable<Request>> {
+    return this.http.post<Request>(`${BASE_API_URL}/requests/feeds`, { ...feed }).pipe(catchError(() => of(null)));
   }
 
   getRequestsInfo$(): Observable<RequestInfo[]> {
@@ -107,6 +112,23 @@ export class RequestsService {
     const typeId: string = types[request.type];
 
     return { ...omit(request, ['status', 'type']), statusId, typeId };
+  }
+
+  getBackendUpdateRequestModel(
+    request: RequestInfo,
+    statuses: RequestStatuses,
+    types: RequestTypes
+  ): UpdateRequestBackendModel {
+    const statusId: string = statuses[request.status];
+    const typeId: string = types[request.type];
+    const assignedToId: string = request.assignedTo.id;
+
+    return {
+      ...omit(request, ['code', 'feeds', 'status', 'type', 'createdAt', 'updatedAt', 'createdBy', 'assignedTo']),
+      statusId,
+      typeId,
+      assignedToId,
+    };
   }
 
   private getDataForRequestInfo(request: Request): DataForRequestInfoStream {

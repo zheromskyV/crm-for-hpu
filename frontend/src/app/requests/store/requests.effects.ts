@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
-import { combineLatest, Observable, of, zip } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { RequestsActions } from './requests.actions';
 import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import { CreateRequestBackendModel, Feed, Request } from '../../models/request';
+import { CreateRequestBackendModel, Request, UpdateRequestBackendModel } from '../../models/request';
 import { RequestsService } from '../services/requests.service';
 import { FromCore } from '../../core/store/core.selectors';
 import { NotificationService } from '../../core/services/notification.service';
@@ -31,7 +31,7 @@ export class RequestsEffects {
       ofType(RequestsActions.loadAllRequests),
       withLatestFrom(this.store.select(FromAuth.getCurrentRole)),
       switchMap(([_, userRole]) =>
-        userRole === Role.Client ? this.requestsService.getAllMine$() : this.requestsService.getAll$()
+        userRole === Role.Admin ? this.requestsService.getAllMine$() : this.requestsService.getAll$()
       ),
       switchMap((requests: Request[]) => [RequestsActions.setRequests({ requests })])
     )
@@ -65,6 +65,29 @@ export class RequestsEffects {
     )
   );
 
+  updateRequest$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RequestsActions.updateRequest),
+      withLatestFrom(
+        combineLatest([this.store.select(FromCore.getRequestStatuses), this.store.select(FromCore.getRequestTypes)])
+      ),
+      map(([{ request }, [statuses, types]]) =>
+        this.requestsService.getBackendUpdateRequestModel(request, statuses, types)
+      ),
+      switchMap((request: UpdateRequestBackendModel) => this.requestsService.update$(request)),
+      switchMap((updatedRequest: Nullable<Request>) => {
+        if (!updatedRequest) {
+          this.notificationService.error('Не удалось отправить данные');
+          return [];
+        }
+
+        this.notificationService.success('Данные успешно отправлены');
+
+        return [RequestsActions.updateRequestsState({ request: updatedRequest })];
+      })
+    )
+  );
+
   addRequest$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(RequestsActions.addRequest),
@@ -76,32 +99,27 @@ export class RequestsEffects {
   submitFeed$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(RequestsActions.submitFeed),
-      switchMap(({ feed }) => zip(this.requestsService.addFeed$(feed), of(feed.requestId))),
-      switchMap(([createdFeed, requestId]: [Nullable<Feed>, string]) => {
-        if (!createdFeed) {
+      switchMap(({ feed }) => this.requestsService.addFeed$(feed)),
+      switchMap((updatedRequest: Nullable<Request>) => {
+        if (!updatedRequest) {
           this.notificationService.error('Не удалось отправить данные');
           return [];
         }
 
         this.notificationService.success('Данные успешно отправлены');
 
-        return [RequestsActions.addFeed({ feed: createdFeed, requestId })];
+        return [RequestsActions.updateRequestsState({ request: updatedRequest })];
       })
     )
   );
 
-  addFeed$: Observable<Action> = createEffect(() =>
+  updateRequestsState$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
-      ofType(RequestsActions.addFeed),
+      ofType(RequestsActions.updateRequestsState),
       withLatestFrom(this.store.select(FromRequests.getRequests)),
-      switchMap(([{ feed, requestId }, requests]) => {
+      switchMap(([{ request: updatedRequest }, requests]) => {
         const updatedRequests: Request[] = requests.map((request: Request) =>
-          request.id === requestId
-            ? {
-                ...request,
-                feeds: [...request.feeds, feed],
-              }
-            : request
+          request.id === updatedRequest.id ? updatedRequest : request
         );
 
         return [RequestsActions.setRequests({ requests: updatedRequests })];

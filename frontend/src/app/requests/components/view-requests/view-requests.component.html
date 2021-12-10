@@ -5,13 +5,18 @@
     </p-tabPanel>
 
     <p-tabPanel [header]="'Доска'">
-      <app-view-requests-board [requests]="requests" (cardClicked)="showDialog($event)"></app-view-requests-board>
+      <app-view-requests-board
+        [requests]="requestsForBoard"
+        (cardClicked)="showDialog($event)"
+      ></app-view-requests-board>
     </p-tabPanel>
   </p-tabView>
 </app-page-container>
 
 <app-request-dialog
   [currentRequestInfo]="currentRequestInfo"
+  [currentUserInfo]="currentUserInfo"
   [(isDialogVisible)]="isDialogVisible"
   (submitFeed)="submitFeed($event)"
+  (updateRequest)="updateRequest($event)"
 ></app-request-dialog>

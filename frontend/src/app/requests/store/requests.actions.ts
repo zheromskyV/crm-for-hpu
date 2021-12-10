@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { CreateFeedBackendModel, CreateRequestModel, Feed, Request } from '../../models/request';
+import { CreateFeedBackendModel, CreateRequestModel, Request, RequestInfo } from '../../models/request';
 import { User } from '../../models/user';
 
 const loadAllRequests = createAction('[REQUESTS] LOAD_ALL_REQUESTS');
@@ -12,11 +12,11 @@ const submitRequest = createAction('[REQUESTS] SUBMIT_REQUEST', props<{ request:
 
 const addRequest = createAction('[REQUESTS] ADD_REQUEST', props<{ request: Request }>());
 
+const updateRequest = createAction('[REQUESTS] UPDATE_REQUEST', props<{ request: RequestInfo }>());
+
 const submitFeed = createAction('[REQUESTS] SUBMIT_FEED', props<{ feed: CreateFeedBackendModel }>());
 
-const addFeed = createAction('[REQUESTS] ADD_REQUEST', props<{ feed: Feed, requestId: string }>());
-
-const updateRequest = createAction('[REQUESTS] UPDATE_REQUEST', props<{ request: Request }>());
+const updateRequestsState = createAction('[REQUESTS] UPDATE_REQUESTS_STATE', props<{ request: Request }>());
 
 const deleteRequest = createAction('[REQUESTS] DELETE_REQUEST', props<{ request: Request }>());
 
@@ -28,9 +28,9 @@ export const RequestsActions = {
   setRequests,
   submitRequest,
   addRequest,
-  submitFeed,
-  addFeed,
   updateRequest,
+  submitFeed,
+  updateRequestsState,
   deleteRequest,
   clearRequests,
 };

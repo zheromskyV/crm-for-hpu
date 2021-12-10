@@ -33,3 +33,18 @@ export interface CreateRequestDto {
   rating?: number;
   numberOfAffected?: number;
 }
+
+export interface UpdateRequestDto {
+  id: string;
+  message: string;
+  urgency: number;
+  statusId: string;
+  typeId: string;
+  mailTo?: string;
+  subject?: string;
+  linkedRequestCode?: number;
+  researchParticipation?: boolean;
+  rating?: number;
+  numberOfAffected?: number;
+  assignedToId?: string;
+}

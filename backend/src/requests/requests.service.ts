@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from './request.entity';
-import { CreateRequestDto, GetRequestDto } from './request.dto';
-import { omit } from 'lodash';
+import { CreateRequestDto, GetRequestDto, UpdateRequestDto } from './request.dto';
+import { isNil, omit, omitBy } from 'lodash';
 import { UsersService } from '../users/users.service';
 import { FeedsService } from './feeds/feeds.service';
 import { Status } from './statuses/status.entity';
@@ -43,9 +43,7 @@ export class RequestsService {
   async getForUser(user: User): Promise<Request[]> {
     return this.requestRepo.find({
       relations: this.relations,
-      where: {
-        createdBy: user,
-      },
+      where: [{ createdBy: user }, { assignedTo: user }],
     });
   }
 
@@ -61,12 +59,37 @@ export class RequestsService {
     });
   }
 
-  async addFeed(feed: Feed, requestId: string): Promise<void> {
+  async update(requestDto: UpdateRequestDto): Promise<Request> {
+    const status: Status = await this.statusesService.getById(requestDto.statusId);
+    const type: Type = await this.typesService.getById(requestDto.typeId);
+
+    let assignedTo: User | null = null;
+
+    if (requestDto.assignedToId) {
+      assignedTo = await this.usersService.getById(requestDto.assignedToId);
+    }
+
+    await this.requestRepo.save(
+      omitBy(
+        {
+          ...requestDto,
+          status,
+          type,
+          assignedTo,
+        },
+        isNil
+      )
+    );
+
+    return this.requestRepo.findOneOrFail(requestDto.id, { relations: this.relations });
+  }
+
+  async addFeed(feed: Feed, requestId: string): Promise<Request> {
     const request: Request = await this.requestRepo.findOneOrFail({ id: requestId }, { relations: this.relations });
 
     request.feeds.push(feed);
 
-    await this.requestRepo.save({ ...request });
+    return this.requestRepo.save({ ...request });
   }
 
   mapToSend(request: Request): GetRequestDto {

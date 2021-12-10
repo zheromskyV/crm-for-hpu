@@ -124,7 +124,47 @@
       </p-fieldset>
       <br />
 
-<!--      <div class="buttons-container"></div>-->
+      <div class="buttons-container controls-section" *ngIf="isControlsSectionVisible">
+        <p-button
+          *ngIf="isMoveFromDraftToOpenedShown"
+          [label]="'Открыть'"
+          [icon]="icons.move"
+          (click)="moveFromDraftToOpened()"
+          styleClass="button p-button"
+        ></p-button>
+
+        <p-button
+          *ngIf="isMoveFromOpenedToInProgressShown"
+          [label]="'Начать прогресс'"
+          [icon]="icons.move"
+          (click)="moveFromOpenedToInProgress()"
+          styleClass="button p-button"
+        ></p-button>
+
+        <p-button
+          *ngIf="isMoveFromInProgressToClosedShown"
+          [label]="'Закрыть'"
+          [icon]="icons.move"
+          (click)="moveFromInProgressToClosed()"
+          styleClass="button p-button"
+        ></p-button>
+
+        <p-button
+          *ngIf="isMoveFromClosedToOpenedShown"
+          [label]="'Переоткрыть'"
+          [icon]="icons.reopen"
+          (click)="moveFromClosedToOpened()"
+          styleClass="button p-button"
+        ></p-button>
+
+        <p-button
+          *ngIf="isAssignToMeShown"
+          [label]="'Забрать в работу'"
+          [icon]="icons.move"
+          (click)="assignToMe()"
+          styleClass="button p-button"
+        ></p-button>
+      </div>
     </div>
   </ng-template>
 </p-dialog>

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Put, Req } from '@nestjs/common';
 import { RequestsService } from './requests.service';
 import { SkipAuth } from '../auth/skip-auth.decorator';
 import { StatusesService } from './statuses/statuses.service';
@@ -6,10 +6,10 @@ import { TypesService } from './types/types.service';
 import { GetStatusesConfigDto } from './statuses/statuses.dto';
 import { GetTypesConfigDto } from './types/types.dto';
 import { Request } from './request.entity';
-import { CreateRequestDto, GetRequestDto } from './request.dto';
+import { CreateRequestDto, GetRequestDto, UpdateRequestDto } from './request.dto';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
-import { CreateFeedDto, GetFeedDto } from './feeds/feeds.dto';
+import { CreateFeedDto } from './feeds/feeds.dto';
 import { Feed } from './feeds/feed.entity';
 import { FeedsService } from './feeds/feeds.service';
 
@@ -47,15 +47,22 @@ export class RequestsController {
     return this.requestsService.mapToSend(request);
   }
 
+  @Put()
+  async update(@Body() requestDto: UpdateRequestDto): Promise<GetRequestDto> {
+    const request: Request = await this.requestsService.update(requestDto);
+
+    return this.requestsService.mapToSend(request);
+  }
+
   @Post('feeds')
   @HttpCode(HttpStatus.CREATED)
-  async addFeed(@Body() feedDto: CreateFeedDto, @Req() req): Promise<GetFeedDto> {
+  async addFeed(@Body() feedDto: CreateFeedDto, @Req() req): Promise<GetRequestDto> {
     const user: User = await this.usersService.getById(req.user?.id || '');
     const feed: Feed = await this.feedsService.create(feedDto, user);
 
-    await this.requestsService.addFeed(feed, feedDto.requestId);
+    const request: Request = await this.requestsService.addFeed(feed, feedDto.requestId);
 
-    return this.feedsService.mapToSend(feed);
+    return this.requestsService.mapToSend(request);
   }
 
   @SkipAuth()
