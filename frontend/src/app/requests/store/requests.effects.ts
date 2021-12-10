@@ -4,13 +4,15 @@ import { Action, Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { combineLatest, Observable, of, zip } from 'rxjs';
 import { RequestsActions } from './requests.actions';
-import { map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { CreateRequestBackendModel, Feed, Request } from '../../models/request';
 import { RequestsService } from '../services/requests.service';
 import { FromCore } from '../../core/store/core.selectors';
 import { NotificationService } from '../../core/services/notification.service';
 import { Nullable } from '../../models/core';
 import { FromRequests } from './requests.selectors';
+import { RequestType } from '../../constants/requsts';
+import { EmailService } from '../../core/services/email.service';
 
 @Injectable()
 export class RequestsEffects {
@@ -18,7 +20,8 @@ export class RequestsEffects {
     private readonly actions$: Actions,
     private readonly store: Store<AppState>,
     private readonly requestsService: RequestsService,
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
+    private readonly emailService: EmailService
   ) {}
 
   loadAllRequests$: Observable<Action> = createEffect(() =>
@@ -32,6 +35,11 @@ export class RequestsEffects {
   submitRequest$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(RequestsActions.submitRequest),
+      tap(({ request }) => {
+        if (request.type === RequestType.Email) {
+          this.emailService.sendNotifyAgentEmail(request.mailTo, request.subject);
+        }
+      }),
       withLatestFrom(
         combineLatest([this.store.select(FromCore.getRequestStatuses), this.store.select(FromCore.getRequestTypes)])
       ),
