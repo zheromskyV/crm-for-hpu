@@ -47,7 +47,7 @@ const emailNavLink: NavigationLink = {
 
 const analyticsNavLink: NavigationLink = {
   name: 'Аналитика',
-  url: 'analyticsNavLink',
+  url: routerPaths.analytics.home,
   icon: PrimeIcons.CHART_BAR,
 };
 
@@ -71,11 +71,10 @@ const callUsNavLink: NavigationLink = {
 
 export const navigation: Navigation = {
   [Role.Admin]: [profileNavLink, reqViewNavLink, analyticsNavLink],
-  [Role.Agent]: [profileNavLink, reqViewNavLink],
+  [Role.Agent]: [profileNavLink, reqViewNavLink, analyticsNavLink],
   [Role.ChatAgent]: [profileNavLink, chatNavLink],
   [Role.Client]: [
     profileNavLink,
-    chatNavLink,
     helpArticlesNavLink,
     reqViewNavLink,
     incidentNavLink,
@@ -84,5 +83,6 @@ export const navigation: Navigation = {
     featureNavLink,
     emailNavLink,
     callUsNavLink,
+    analyticsNavLink,
   ],
 };

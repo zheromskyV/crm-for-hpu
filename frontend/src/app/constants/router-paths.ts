@@ -24,5 +24,8 @@ export const routerPaths = {
   phones: {
     home: 'phones',
   },
+  analytics: {
+    home: 'analytics',
+  },
   notFound: 'not-found',
 };

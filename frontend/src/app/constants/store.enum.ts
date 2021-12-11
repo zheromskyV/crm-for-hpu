@@ -4,4 +4,5 @@ export enum StoreFeature {
   Requests = 'requests',
   Articles = 'articles',
   Phones = 'phones',
+  Analytics = 'analytics',
 }

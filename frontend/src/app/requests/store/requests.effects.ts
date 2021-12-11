@@ -31,7 +31,7 @@ export class RequestsEffects {
       ofType(RequestsActions.loadAllRequests),
       withLatestFrom(this.store.select(FromAuth.getCurrentRole)),
       switchMap(([_, userRole]) =>
-        userRole === Role.Admin ? this.requestsService.getAllMine$() : this.requestsService.getAll$()
+        userRole === Role.Client ? this.requestsService.getAllMine$() : this.requestsService.getAll$()
       ),
       switchMap((requests: Request[]) => [RequestsActions.setRequests({ requests })])
     )

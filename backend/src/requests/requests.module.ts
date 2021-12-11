@@ -18,5 +18,6 @@ import { UsersModule } from '../users/users.module';
   controllers: [RequestsController, StatusesController, TypesController],
   providers: [RequestsService, TypesService, StatusesService, FeedsService],
   imports: [TypeOrmModule.forFeature([Request, Type, Status, Feed]), CoreModule, UsersModule],
+  exports: [RequestsService],
 })
 export class RequestsModule {}

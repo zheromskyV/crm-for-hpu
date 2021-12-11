@@ -58,3 +58,13 @@ export const statusLabelsForUI = {
   [RequestStatus.Closed]: 'Закрытый',
   [RequestStatus.Draft]: 'Черновик',
 };
+
+export const daysOfWeekLabelsForUI = [
+  'Воскресенье',
+  'Понедельник',
+  'Вторник',
+  'Среда',
+  'Четверг',
+  'Пятница',
+  'Суббота',
+];

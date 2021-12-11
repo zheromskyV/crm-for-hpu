@@ -9,6 +9,7 @@ import { UsersStoreModule } from './users/store/users-store.module';
 import { RequestsStoreModule } from './requests/store/requests-store.module';
 import { ArticlesStoreModule } from './articles/store/articles-store.module';
 import { PhonesStoreModule } from './phones/store/phones-store.module';
+import { AnalyticsStoreModule } from './analytics/store/analytics-store.module';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { PhonesStoreModule } from './phones/store/phones-store.module';
     RequestsStoreModule,
     ArticlesStoreModule,
     PhonesStoreModule,
+    AnalyticsStoreModule,
   ],
 })
 export class AppStoreModule {}
