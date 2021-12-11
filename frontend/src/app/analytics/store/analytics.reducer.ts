@@ -4,17 +4,21 @@ import { AnalyticsActions } from './analytics.actions';
 
 const reducer = createReducer(
   initialAnalyticsState,
-  on(AnalyticsActions.setAnalytics, (state, { requestTypes, requestStatuses, requestsByDay }) => ({
+  on(AnalyticsActions.setAnalytics, (state, { requestTypes, requestStatuses, requestsByDay, feedback, assignee }) => ({
     ...state,
     requestTypes,
     requestStatuses,
     requestsByDay,
+    feedback,
+    assignee,
   })),
   on(AnalyticsActions.clearAnalytics, (state) => ({
     ...state,
     requestTypes: initialAnalyticsState.requestTypes,
     requestStatuses: initialAnalyticsState.requestStatuses,
     requestsByDay: initialAnalyticsState.requestsByDay,
+    feedback: initialAnalyticsState.feedback,
+    assignee: initialAnalyticsState.assignee,
   }))
 );
 

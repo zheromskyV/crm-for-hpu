@@ -10,6 +10,8 @@ export interface AnalyticsFromServerModel {
 export interface ChartDataSetOptions {
   backgroundColor?: string | string[];
   hoverBackgroundColor?: string | string[];
+  fill?: boolean;
+  borderColor?: string;
 }
 
 export interface ChartDataSet extends ChartDataSetOptions {

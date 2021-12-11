@@ -20,4 +20,14 @@ const getRequestsByDayAnalytics = createSelector(
   (state: AnalyticsState): AnalyticsData[] => state.requestsByDay
 );
 
-export const FromAnalytics = { getRequestTypesAnalytics, getRequestStatusesAnalytics, getRequestsByDayAnalytics };
+const getFeedbackAnalytics = createSelector(rootSelector, (state: AnalyticsState): AnalyticsData[] => state.feedback);
+
+const getAssigneeAnalytics = createSelector(rootSelector, (state: AnalyticsState): AnalyticsData[] => state.assignee);
+
+export const FromAnalytics = {
+  getRequestTypesAnalytics,
+  getRequestStatusesAnalytics,
+  getRequestsByDayAnalytics,
+  getFeedbackAnalytics,
+  getAssigneeAnalytics,
+};

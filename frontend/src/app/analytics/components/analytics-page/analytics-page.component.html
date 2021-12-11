@@ -1,18 +1,38 @@
 <app-page-container [header]="'Аналитика'">
+  <div class="p-d-flex" *ngIf="isAdminView$ | async">
+    <div class="cell p-d-flex p-flex-column p-ai-center">
+      <p>
+        Оценки пользователей ( средняя:
+        <b>{{ averageFeedback$ | async }}</b>
+        )
+      </p>
+      <p-chart class="cell" type="line" [data]="feedbackAnalytics$ | async"></p-chart>
+    </div>
+  </div>
+
   <div class="p-d-flex">
     <div class="cell p-d-flex p-flex-column p-ai-center">
       <p>Распределение запросов по типам</p>
       <p-chart class="cell" type="pie" [data]="requestTypesAnalytics$ | async"></p-chart>
     </div>
+
     <div class="cell p-d-flex p-flex-column p-ai-center">
       <p>Распределение запросов по статусам</p>
       <p-chart class="cell" type="pie" [data]="requestStatusesAnalytics$ | async"></p-chart>
     </div>
   </div>
+
   <div class="p-d-flex">
     <div class="cell p-d-flex p-flex-column p-ai-center">
       <p>Распределение запросов по дням создания / назначения</p>
       <p-chart class="cell" type="bar" [data]="requestByDayAnalytics$ | async"></p-chart>
+    </div>
+  </div>
+
+  <div class="p-d-flex" *ngIf="isAdminView$ | async">
+    <div class="cell p-d-flex p-flex-column p-ai-center">
+      <p>Соотношение назначенных / неназначенных заявок</p>
+      <p-chart class="cell restricted" type="pie" [data]="assigneeAnalytics$ | async"></p-chart>
     </div>
   </div>
 </app-page-container>

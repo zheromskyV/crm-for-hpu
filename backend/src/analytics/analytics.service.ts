@@ -40,6 +40,48 @@ export class AnalyticsService {
     return this.getRequestAnalyticsByDay(requests);
   }
 
+  async getFeedbackAnalytics(): Promise<GetAnalyticsDto> {
+    const requests: Request[] = await this.requestsService.getAll();
+
+    const data: AnalyticsData[] = [];
+    let counter = 0;
+
+    requests.forEach(({ rating }: Request) => {
+      if (rating && rating > 0) {
+        data.push({
+          label: counter.toString(),
+          value: rating,
+        });
+
+        counter++;
+      }
+    });
+
+    return { data };
+  }
+
+  async getRequestsAssigneeAnalytics(): Promise<GetAnalyticsDto> {
+    const requests: Request[] = await this.requestsService.getAll();
+
+    let assignedCounter = 0;
+    let unassignedCounter = 0;
+
+    requests.forEach(({ assignedTo }: Request) => {
+      if (assignedTo && assignedTo.id) {
+        assignedCounter++;
+      } else {
+        unassignedCounter++;
+      }
+    });
+
+    return {
+      data: [
+        { label: 'Назначенные', value: assignedCounter },
+        { label: 'Неназначенные', value: unassignedCounter },
+      ],
+    };
+  }
+
   private async getRequestsAnalyticsForUser(user: User, keyMapper: AnalyticsKeyMapperFn): Promise<GetAnalyticsDto> {
     const requests: Request[] = await this.requestsService.getForUser(user);
 

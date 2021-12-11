@@ -5,7 +5,13 @@ const loadAnalytics = createAction('[ANALYTICS] LOAD_ANALYTICS');
 
 const setAnalytics = createAction(
   '[ANALYTICS] SET_ANALYTICS',
-  props<{ requestTypes: AnalyticsData[]; requestStatuses: AnalyticsData[]; requestsByDay: AnalyticsData[] }>()
+  props<{
+    requestTypes: AnalyticsData[];
+    requestStatuses: AnalyticsData[];
+    requestsByDay: AnalyticsData[];
+    feedback: AnalyticsData[];
+    assignee: AnalyticsData[];
+  }>()
 );
 
 const clearAnalytics = createAction('[ANALYTICS] CLEAR_ANALYTICS');

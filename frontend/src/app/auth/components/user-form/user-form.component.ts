@@ -69,7 +69,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)],
       ],
       [this.formFields.role]: [{ value: null, disabled }, [Validators.required]],
-      [this.formFields.birthday]: [{ value: null }, [Validators.required, BirthdayValidator]],
+      [this.formFields.birthday]: [{ value: null, disabled }, [Validators.required, BirthdayValidator]],
       [this.formFields.name]: ['', [Validators.required, Validators.minLength(MIN_NAME_LENGTH)]],
       [this.formFields.surname]: ['', [Validators.required, Validators.minLength(MIN_NAME_LENGTH)]],
       [this.formFields.address]: ['', [Validators.required]],

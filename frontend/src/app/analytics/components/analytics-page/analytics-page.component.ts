@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { AnalyticsData, ChartData } from '../../../models/analytics';
 import { map } from 'rxjs/operators';
 import { daysOfWeekLabelsForUI, statusLabelsForUI, typeLabelsForUI } from '../../../constants/requsts';
+import { FromAuth } from '../../../auth/store/auth.selectors';
+import { Role } from '../../../constants/roles';
 
 @Component({
   selector: 'app-analytics-page',
@@ -17,6 +19,10 @@ export class AnalyticsPageComponent implements OnInit, OnDestroy {
   requestTypesAnalytics$!: Observable<ChartData>;
   requestStatusesAnalytics$!: Observable<ChartData>;
   requestByDayAnalytics$!: Observable<ChartData>;
+  isAdminView$!: Observable<boolean>;
+  feedbackAnalytics$!: Observable<ChartData>;
+  averageFeedback$!: Observable<string>;
+  assigneeAnalytics$!: Observable<ChartData>;
 
   private readonly typeLabelsForUI = typeLabelsForUI;
   private readonly statusLabelsForUI = statusLabelsForUI;
@@ -43,6 +49,8 @@ export class AnalyticsPageComponent implements OnInit, OnDestroy {
   constructor(private readonly store: Store<AppState>) {}
 
   ngOnInit(): void {
+    this.isAdminView$ = this.store.select(FromAuth.getCurrentRole).pipe(map((role: Role) => role === Role.Admin));
+
     this.requestTypesAnalytics$ = this.store
       .select(FromAnalytics.getRequestTypesAnalytics)
       .pipe(map((data) => this.mapAnalyticsDataToPieChartData(data, this.typeLabelsForUI)));
@@ -57,6 +65,19 @@ export class AnalyticsPageComponent implements OnInit, OnDestroy {
         map((data) => this.mapAnalyticsDataToBarChartData(data, 'Количество запросов', this.daysOfWeekLabelsForUI))
       );
 
+    this.feedbackAnalytics$ = this.store
+      .select(FromAnalytics.getFeedbackAnalytics)
+      .pipe(map(this.mapFeedbackAnalyticsDataToLineChartData));
+
+    this.averageFeedback$ = this.store.select(FromAnalytics.getFeedbackAnalytics).pipe(
+      map(this.getAverageDataValue),
+      map((value) => value.toFixed(3))
+    );
+
+    this.assigneeAnalytics$ = this.store
+      .select(FromAnalytics.getAssigneeAnalytics)
+      .pipe(map((data) => this.mapAnalyticsDataToPieChartData(data)));
+
     this.store.dispatch(AnalyticsActions.loadAnalytics());
   }
 
@@ -64,9 +85,9 @@ export class AnalyticsPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(AnalyticsActions.clearAnalytics());
   }
 
-  private mapAnalyticsDataToPieChartData(data: AnalyticsData[], labelsMapping: Record<string, string>): ChartData {
+  private mapAnalyticsDataToPieChartData(data: AnalyticsData[], labelsMapping?: Record<string, string>): ChartData {
     return {
-      labels: data.map(({ label }) => labelsMapping[label]),
+      labels: data.map(({ label }) => (labelsMapping ? labelsMapping[label] : label)),
       datasets: [
         {
           data: data.map(({ value }) => value),
@@ -91,5 +112,26 @@ export class AnalyticsPageComponent implements OnInit, OnDestroy {
         },
       ],
     };
+  }
+
+  private mapFeedbackAnalyticsDataToLineChartData(data: AnalyticsData[]): ChartData {
+    return {
+      labels: data.map(({ label }) => label),
+      datasets: [
+        {
+          label: 'Оценки',
+          data: data.map(({ value }) => value),
+          fill: true,
+          borderColor: '#FFA32F',
+          backgroundColor: 'rgba(255, 167, 38, 0.15)',
+        },
+      ],
+    };
+  }
+
+  private getAverageDataValue(data: AnalyticsData[]): number {
+    const sum = data.reduce((accumulator: number, current: AnalyticsData) => accumulator + current.value, 0);
+
+    return sum / data.length;
   }
 }

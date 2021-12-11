@@ -43,4 +43,14 @@ export class AnalyticsController {
   async getRequestAnalyticsByDayForAdmin(): Promise<GetAnalyticsDto> {
     return this.analyticsService.getRequestAnalyticsByDayForAdmin();
   }
+
+  @Get('feedback')
+  async getFeedbackAnalytics(): Promise<GetAnalyticsDto> {
+    return this.analyticsService.getFeedbackAnalytics();
+  }
+
+  @Get('assignee')
+  async getRequestsAssigneeAnalytics(): Promise<GetAnalyticsDto> {
+    return this.analyticsService.getRequestsAssigneeAnalytics();
+  }
 }

@@ -43,7 +43,7 @@ export class ArticlesPageComponent implements OnInit, OnDestroy {
       return this.initialArticles;
     }
 
-    return this.initialArticles.filter(({ title }: Article) => title.includes(this.query));
+    return this.initialArticles.filter(({ title }: Article) => title.toLowerCase().includes(this.query.toLowerCase()));
   }
 
   selectArticle(article: Article): void {

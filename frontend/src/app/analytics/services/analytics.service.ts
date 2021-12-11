@@ -41,6 +41,14 @@ export class AnalyticsService {
     return this.getAnalyticsData$('requestsByDayForAdmin');
   }
 
+  getFeedbackAnalytics$(): Observable<AnalyticsData[]> {
+    return this.getAnalyticsData$('feedback');
+  }
+
+  getRequestsAssigneeAnalytics$(): Observable<AnalyticsData[]> {
+    return this.getAnalyticsData$('assignee');
+  }
+
   private getRequestTypesOrStatusesAnalytics$(
     apiEndpoint: string,
     service: RequestStatusesService | RequestTypesService

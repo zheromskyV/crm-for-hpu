@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable, zip } from 'rxjs';
+import { Observable, of, zip } from 'rxjs';
 import { AnalyticsActions } from './analytics.actions';
 import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { FromAuth } from '../../auth/store/auth.selectors';
@@ -26,16 +26,20 @@ export class AnalyticsEffects {
           ? zip(
               this.analyticsService.getRequestTypesAnalyticsForAdmin$(),
               this.analyticsService.getRequestStatusesAnalyticsForAdmin$(),
-              this.analyticsService.getRequestAnalyticsByDayForAdmin$()
+              this.analyticsService.getRequestAnalyticsByDayForAdmin$(),
+              this.analyticsService.getFeedbackAnalytics$(),
+              this.analyticsService.getRequestsAssigneeAnalytics$()
             )
           : zip(
               this.analyticsService.getRequestTypesAnalyticsForUser$(),
               this.analyticsService.getRequestStatusesAnalyticsForUser$(),
-              this.analyticsService.getRequestAnalyticsByDayForUser$()
+              this.analyticsService.getRequestAnalyticsByDayForUser$(),
+              of([]),
+              of([])
             )
       ),
-      switchMap(([requestTypes, requestStatuses, requestsByDay]) => [
-        AnalyticsActions.setAnalytics({ requestTypes, requestStatuses, requestsByDay }),
+      switchMap(([requestTypes, requestStatuses, requestsByDay, feedback, assignee]) => [
+        AnalyticsActions.setAnalytics({ requestTypes, requestStatuses, requestsByDay, feedback, assignee }),
       ])
     )
   );
