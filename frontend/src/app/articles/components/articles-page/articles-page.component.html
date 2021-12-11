@@ -5,7 +5,7 @@
     </div>
     <div class="p-col-12 p-md-9">
       <app-search [(query)]="query"></app-search>
-      <app-article [article]="selectedArticle"></app-article>
+      <app-article [article]="selectedArticle" (createReport)="createReport($event)"></app-article>
     </div>
   </div>
 </app-page-container>

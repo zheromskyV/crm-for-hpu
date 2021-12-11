@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ArticlesActions } from './articles.actions';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { ArticlesService } from '../services/articles.service';
 import { Article } from '../../models/article';
 
@@ -17,5 +17,14 @@ export class ArticlesEffects {
       switchMap(() => this.articlesService.getArticles$()),
       switchMap((articles: Article[]) => [ArticlesActions.setArticles({ articles })])
     )
+  );
+
+  createReport$: Observable<Action> = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ArticlesActions.createReport),
+        tap(({ article }) => this.articlesService.createReport(article))
+      ),
+    { dispatch: false }
   );
 }

@@ -22,6 +22,8 @@ const deleteRequest = createAction('[REQUESTS] DELETE_REQUEST', props<{ request:
 
 const clearRequests = createAction('[REQUESTS] CLEAR_REQUEST');
 
+const createReport = createAction('[REQUESTS] CREATE_REPORT', props<{ request: RequestInfo }>());
+
 export const RequestsActions = {
   loadAllRequests,
   loadUserRequests,
@@ -33,4 +35,5 @@ export const RequestsActions = {
   updateRequestsState,
   deleteRequest,
   clearRequests,
+  createReport,
 };

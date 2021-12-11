@@ -76,7 +76,10 @@ export class ViewRequestsComponent implements OnInit, OnDestroy {
   }
 
   updateRequest(request: RequestInfo): void {
-    console.log(request);
     this.store.dispatch(RequestsActions.updateRequest({ request }));
+  }
+
+  createReport(request: RequestInfo): void {
+    this.store.dispatch(RequestsActions.createReport({ request }));
   }
 }

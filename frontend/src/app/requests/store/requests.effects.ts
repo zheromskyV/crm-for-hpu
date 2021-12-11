@@ -126,4 +126,13 @@ export class RequestsEffects {
       })
     )
   );
+
+  createReport$: Observable<Action> = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RequestsActions.createReport),
+        tap(({ request }) => this.requestsService.createReport(request))
+      ),
+    { dispatch: false }
+  );
 }

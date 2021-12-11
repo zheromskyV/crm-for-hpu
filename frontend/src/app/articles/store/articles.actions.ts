@@ -7,4 +7,6 @@ const setArticles = createAction('[ARTICLES] SET_ARTICLES', props<{ articles: Ar
 
 const clearArticles = createAction('[ARTICLES] CLEAR_ARTICLES');
 
-export const ArticlesActions = { loadArticles, setArticles, clearArticles };
+const createReport = createAction('[ARTICLES] CREATE_REPORT', props<{ article: Article }>());
+
+export const ArticlesActions = { loadArticles, setArticles, clearArticles, createReport };

@@ -124,7 +124,14 @@
       </p-fieldset>
       <br />
 
-      <div class="buttons-container controls-section" *ngIf="isControlsSectionVisible">
+      <div class="buttons-container controls-section">
+        <p-button
+          [label]="'Создать отчет'"
+          [icon]="icons.report"
+          (click)="report()"
+          styleClass="button p-button p-button-success"
+        ></p-button>
+
         <p-button
           *ngIf="isMoveFromDraftToOpenedShown"
           [label]="'Открыть'"

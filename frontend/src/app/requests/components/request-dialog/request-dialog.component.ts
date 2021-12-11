@@ -25,6 +25,7 @@ export class RequestDialogComponent {
   @Output() isDialogVisibleChange = new EventEmitter<boolean>();
   @Output() submitFeed = new EventEmitter<CreateFeedBackendModel>();
   @Output() updateRequest = new EventEmitter<RequestInfo>();
+  @Output() createReport = new EventEmitter<RequestInfo>();
 
   newComment = '';
 
@@ -36,6 +37,7 @@ export class RequestDialogComponent {
     no: PrimeIcons.TIMES_CIRCLE,
     move: PrimeIcons.ANGLE_DOUBLE_RIGHT,
     reopen: PrimeIcons.REFRESH,
+    report: PrimeIcons.DOWNLOAD,
   };
 
   private readonly urgenciesForUI = urgenciesForUI;
@@ -85,6 +87,10 @@ export class RequestDialogComponent {
 
   cancel(): void {
     this.isDialogVisibleChange.emit(false);
+  }
+
+  report(): void {
+    this.createReport.emit(this.currentRequestInfo);
   }
 
   get isMoveFromDraftToOpenedShown(): boolean {
@@ -148,16 +154,6 @@ export class RequestDialogComponent {
       ...this.currentRequestInfo,
       assignedTo: this.currentUserInfo,
     });
-  }
-
-  get isControlsSectionVisible(): boolean {
-    return (
-      this.isMoveFromDraftToOpenedShown ||
-      this.isMoveFromOpenedToInProgressShown ||
-      this.isMoveFromInProgressToClosedShown ||
-      this.isMoveFromClosedToOpenedShown ||
-      this.isAssignToMeShown
-    );
   }
 
   private get isCurrentRequestAssigned(): boolean {

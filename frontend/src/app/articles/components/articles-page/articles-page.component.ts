@@ -49,4 +49,8 @@ export class ArticlesPageComponent implements OnInit, OnDestroy {
   selectArticle(article: Article): void {
     this.selectedArticle = article;
   }
+
+  createReport(article: Article): void {
+    this.store.dispatch(ArticlesActions.createReport({ article }));
+  }
 }

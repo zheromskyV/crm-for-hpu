@@ -10,6 +10,16 @@
   <p-divider></p-divider>
 
   <p>{{ article!.body }}</p>
+  <p-divider></p-divider>
+
+  <div class="buttons-container p-d-flex p-jc-end">
+    <p-button
+      [label]="'Создать отчет'"
+      [icon]="icons.report"
+      (click)="report()"
+      styleClass="button p-button p-button-success"
+    ></p-button>
+  </div>
 </ng-template>
 
 <ng-template #noArticle>

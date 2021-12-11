@@ -19,13 +19,20 @@ import { AppState } from '../../app.state';
 import { FromRequests } from '../store/requests.selectors';
 import { RequestTypesService } from '../../core/services/request-types.service';
 import { RequestStatusesService } from '../../core/services/request-statuses.service';
-import { RequestStatus, RequestType } from '../../constants/requsts';
+import {
+  RequestStatus,
+  RequestType,
+  statusLabelsForUI,
+  typeLabelsForUI,
+  urgenciesForUI,
+} from '../../constants/requsts';
 import { omit } from 'lodash';
 import { RolesService } from '../../core/services/roles.service';
 import { Role } from '../../constants/roles';
 import { UsersService } from '../../users/services/users.service';
 import { Nullable } from '../../models/core';
 import { User } from '../../models/user';
+import { ReportsService } from '../../core/services/reports.service';
 
 type DataForRequestInfo = [Request, RequestStatus, RequestType, Role, Role, Role[]];
 type DataForRequestInfoStream = [
@@ -46,7 +53,8 @@ export class RequestsService {
     private readonly store: Store<AppState>,
     private readonly requestTypesService: RequestTypesService,
     private readonly requestStatusesService: RequestStatusesService,
-    private readonly rolesService: RolesService
+    private readonly rolesService: RolesService,
+    private readonly reportsService: ReportsService
   ) {}
 
   static mapToRequestInfo([
@@ -129,6 +137,26 @@ export class RequestsService {
       typeId,
       assignedToId,
     };
+  }
+
+  createReport(request: RequestInfo): void {
+    const content: string = [
+      `Код заявки: ${request.code}`,
+      `Тип: ${typeLabelsForUI[request.type]}`,
+      `Статус: ${statusLabelsForUI[request.status]}`,
+      `Срочность: ${urgenciesForUI.find(({ value }) => value === request.urgency)?.label}`,
+      '',
+      `Создан клиентом ${request.createdBy.email} (${request.createdBy.profile?.name} ${request.createdBy.profile?.surname})`,
+      `Назначен агенту ${request.assignedTo.email || '-'}`,
+      '',
+      `Создан: ${new Date(request.createdAt).toLocaleString()}`,
+      `Обновлен в последний раз: ${new Date(request.updatedAt).toLocaleString()}`,
+      '',
+      `Общее содержание:`,
+      `${request.message}`,
+    ].join('\r\n');
+
+    this.reportsService.createReport(`Отчет по заявке #${request.code}`, content);
   }
 
   private getDataForRequestInfo(request: Request): DataForRequestInfoStream {
