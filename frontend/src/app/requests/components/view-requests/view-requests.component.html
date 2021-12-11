@@ -1,7 +1,10 @@
 <app-page-container [header]="'Мои запросы'">
   <p-tabView>
     <p-tabPanel [header]="'Таблица'">
-      <app-view-requests-table [requests]="requests" (rowClicked)="showDialog($event)"></app-view-requests-table>
+      <app-view-requests-table
+        [requests]="requestsForTable"
+        (rowClicked)="showDialog($event)"
+      ></app-view-requests-table>
     </p-tabPanel>
 
     <p-tabPanel [header]="'Доска'">

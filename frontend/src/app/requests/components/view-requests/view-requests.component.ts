@@ -7,6 +7,8 @@ import { RequestsService } from '../../services/requests.service';
 import { Subscription } from 'rxjs';
 import { UserInfo } from '../../../models/user';
 import { UsersService } from '../../../users/services/users.service';
+import { Role } from '../../../constants/roles';
+import { RequestStatus } from '../../../constants/requsts';
 
 @Component({
   selector: 'app-view-requests',
@@ -58,6 +60,14 @@ export class ViewRequestsComponent implements OnInit, OnDestroy {
     return this.requests.filter(
       ({ assignedTo, createdBy }: RequestInfo) => assignedTo.id === currentId || createdBy.id === currentId
     );
+  }
+
+  get requestsForTable(): RequestInfo[] {
+    if (this.currentUserInfo.role === Role.Client) {
+      return this.requests;
+    }
+
+    return this.requests.filter(({ status }: RequestInfo) => status !== RequestStatus.Draft);
   }
 
   setCurrentRequestInfo(): void {
