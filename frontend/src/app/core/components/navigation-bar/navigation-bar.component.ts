@@ -55,7 +55,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   }
 
   getStyleClass(linkUrl: string): string {
-    return `nav-link p-button-text p-button-${this.currentUrl.includes(linkUrl) ? 'primary' : 'secondary'}`;
+    return `nav-link p-button-text p-button-${this.currentUrl.endsWith(linkUrl) ? 'primary' : 'secondary'}`;
   }
 
   navigateTo(url: string): void {

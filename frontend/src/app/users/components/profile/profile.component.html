@@ -1,13 +1,21 @@
 <app-page-container [header]="'Мой профиль'">
-  <app-user-form
-    [isProfilePage]="true"
-    [isEditable]="isEditable"
-    [userInfo]="userInfo$ | async"
-    (stopEditing)="stopEditing()"
-  >
-  </app-user-form>
+  <ng-container *ngIf="userInfo$ | async as userInfo">
+    <p-tag *ngIf="userInfo.profile?.isVip" class="vip-tag" value="VIP" severity="warning" [icon]="icons.vip"></p-tag>
+
+    <app-user-form
+      [isProfilePage]="true"
+      [isEditable]="isEditable"
+      [userInfo]="userInfo$ | async"
+      (stopEditing)="stopEditing()"
+    ></app-user-form>
+  </ng-container>
 
   <div class="buttons-container p-d-flex p-jc-end" *ngIf="!isEditable">
-    <p-button [label]="'Редактировать'" [icon]="icons.edit" (click)="startEditing()" styleClass="button p-button"></p-button>
+    <p-button
+      [label]="'Редактировать'"
+      [icon]="icons.edit"
+      (click)="startEditing()"
+      styleClass="button p-button"
+    ></p-button>
   </div>
 </app-page-container>

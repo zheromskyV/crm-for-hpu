@@ -18,7 +18,7 @@ const submitFeed = createAction('[REQUESTS] SUBMIT_FEED', props<{ feed: CreateFe
 
 const updateRequestsState = createAction('[REQUESTS] UPDATE_REQUESTS_STATE', props<{ request: Request }>());
 
-const deleteRequest = createAction('[REQUESTS] DELETE_REQUEST', props<{ request: Request }>());
+const deleteRequest = createAction('[REQUESTS] DELETE_REQUEST', props<{ id: string }>());
 
 const clearRequests = createAction('[REQUESTS] CLEAR_REQUEST');
 

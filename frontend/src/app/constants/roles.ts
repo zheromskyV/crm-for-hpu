@@ -20,3 +20,10 @@ export const rolesForDropdown = [
   { value: Role.Agent, label: 'Агент' },
   { value: Role.ChatAgent, label: 'Чат-Агент' },
 ];
+
+export const rolesForUI = {
+  [Role.Admin]: 'Администратор',
+  [Role.Client]: 'Пользователь',
+  [Role.Agent]: 'Агент',
+  [Role.ChatAgent]: 'Чат-Агент',
+};

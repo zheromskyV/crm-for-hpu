@@ -26,6 +26,7 @@ export class RequestDialogComponent {
   @Output() submitFeed = new EventEmitter<CreateFeedBackendModel>();
   @Output() updateRequest = new EventEmitter<RequestInfo>();
   @Output() createReport = new EventEmitter<RequestInfo>();
+  @Output() deleteRequest = new EventEmitter<string>();
 
   newComment = '';
 
@@ -38,6 +39,7 @@ export class RequestDialogComponent {
     move: PrimeIcons.ANGLE_DOUBLE_RIGHT,
     reopen: PrimeIcons.REFRESH,
     report: PrimeIcons.DOWNLOAD,
+    delete: PrimeIcons.TRASH,
   };
 
   private readonly urgenciesForUI = urgenciesForUI;
@@ -91,6 +93,14 @@ export class RequestDialogComponent {
 
   report(): void {
     this.createReport.emit(this.currentRequestInfo);
+  }
+
+  delete(): void {
+    this.deleteRequest.emit(this.currentRequestInfo.id);
+  }
+
+  get isDeleteShown(): boolean {
+    return this.currentUserInfo.role === Role.Admin && this.currentRequestInfo.status === RequestStatus.Closed;
   }
 
   get isMoveFromDraftToOpenedShown(): boolean {

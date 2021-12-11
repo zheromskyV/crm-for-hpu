@@ -69,8 +69,14 @@ const callUsNavLink: NavigationLink = {
   icon: PrimeIcons.PHONE,
 };
 
+const viewUsersNavLink: NavigationLink = {
+  name: 'Пользователи',
+  url: routerPaths.users.home,
+  icon: PrimeIcons.USERS,
+};
+
 export const navigation: Navigation = {
-  [Role.Admin]: [profileNavLink, reqViewNavLink, analyticsNavLink],
+  [Role.Admin]: [profileNavLink, reqViewNavLink, viewUsersNavLink, analyticsNavLink],
   [Role.Agent]: [profileNavLink, reqViewNavLink, analyticsNavLink],
   [Role.ChatAgent]: [profileNavLink, chatNavLink],
   [Role.Client]: [

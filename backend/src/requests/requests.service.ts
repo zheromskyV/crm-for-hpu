@@ -84,6 +84,10 @@ export class RequestsService {
     return this.requestRepo.findOneOrFail(requestDto.id, { relations: this.relations });
   }
 
+  async delete(id: string): Promise<void> {
+    await this.requestRepo.delete(id);
+  }
+
   async addFeed(feed: Feed, requestId: string): Promise<Request> {
     const request: Request = await this.requestRepo.findOneOrFail({ id: requestId }, { relations: this.relations });
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Req } from '@nestjs/common';
 import { RequestsService } from './requests.service';
 import { SkipAuth } from '../auth/skip-auth.decorator';
 import { StatusesService } from './statuses/statuses.service';
@@ -52,6 +52,11 @@ export class RequestsController {
     const request: Request = await this.requestsService.update(requestDto);
 
     return this.requestsService.mapToSend(request);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<void> {
+    await this.requestsService.delete(id);
   }
 
   @Post('feeds')

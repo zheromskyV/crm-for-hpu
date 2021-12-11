@@ -92,4 +92,9 @@ export class ViewRequestsComponent implements OnInit, OnDestroy {
   createReport(request: RequestInfo): void {
     this.store.dispatch(RequestsActions.createReport({ request }));
   }
+
+  deleteRequest(id: string): void {
+    this.store.dispatch(RequestsActions.deleteRequest({ id }));
+    this.isDialogVisible = false;
+  }
 }

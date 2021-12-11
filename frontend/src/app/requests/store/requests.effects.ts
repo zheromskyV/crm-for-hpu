@@ -15,6 +15,7 @@ import { RequestType } from '../../constants/requsts';
 import { EmailService } from '../../core/services/email.service';
 import { FromAuth } from '../../auth/store/auth.selectors';
 import { Role } from '../../constants/roles';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class RequestsEffects {
@@ -121,6 +122,26 @@ export class RequestsEffects {
         const updatedRequests: Request[] = requests.map((request: Request) =>
           request.id === updatedRequest.id ? updatedRequest : request
         );
+
+        return [RequestsActions.setRequests({ requests: updatedRequests })];
+      })
+    )
+  );
+
+  deleteRequest: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RequestsActions.deleteRequest),
+      switchMap(({ id }) => this.requestsService.delete$(id)),
+      withLatestFrom(this.store.select(FromRequests.getRequests)),
+      switchMap(([deletedId, requests]) => {
+        if (isEmpty(deletedId)) {
+          this.notificationService.error('Не удалось удалить данные');
+          return [];
+        }
+
+        this.notificationService.success('Данные успешно удалены');
+
+        const updatedRequests: Request[] = requests.filter((request: Request) => request.id !== deletedId);
 
         return [RequestsActions.setRequests({ requests: updatedRequests })];
       })

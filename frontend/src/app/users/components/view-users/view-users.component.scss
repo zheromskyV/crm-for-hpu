@@ -1,0 +1,27 @@
+@import '~src/styles/style-import';
+
+:host {
+  display: block;
+}
+
+.inner-data {
+  background-color: $background-sub-color !important;
+  padding: 0 1rem;
+  position: relative;
+
+  p {
+    margin-top: 0;
+  }
+
+  .vip-tag {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .make-vip-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
+}

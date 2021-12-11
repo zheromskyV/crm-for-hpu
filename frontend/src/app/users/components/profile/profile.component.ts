@@ -12,6 +12,7 @@ import { UsersService } from '../../services/users.service';
 export class ProfileComponent implements OnInit {
   readonly icons = {
     edit: PrimeIcons.PENCIL,
+    vip: PrimeIcons.STAR,
   };
 
   userInfo$!: Observable<UserInfo>;

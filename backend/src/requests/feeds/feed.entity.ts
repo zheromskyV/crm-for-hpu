@@ -8,7 +8,7 @@ export class Feed extends BaseEntity {
   @Column({ type: 'text', nullable: false })
   message: string;
 
-  @ManyToOne(() => Request, (req) => req.feeds)
+  @ManyToOne(() => Request, (req) => req.feeds, { onDelete: 'CASCADE' })
   request: Request;
 
   @ManyToOne(() => User, (user) => user.createdFeeds)

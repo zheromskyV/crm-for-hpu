@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { combineLatest, from, Observable, of } from 'rxjs';
 import { BASE_API_URL } from '../../constants/api';
-import { catchError, filter, map, mergeMap, toArray } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 import {
   CreateFeedBackendModel,
   CreateRequestBackendModel,
@@ -92,6 +92,13 @@ export class RequestsService {
 
   update$(request: UpdateRequestBackendModel): Observable<Nullable<Request>> {
     return this.http.put<Request>(`${BASE_API_URL}/requests`, { ...request }).pipe(catchError(() => of(null)));
+  }
+
+  delete$(id: string): Observable<string> {
+    return this.http.delete<void>(`${BASE_API_URL}/requests/${id}`).pipe(
+      switchMap(() => of(id)),
+      catchError(() => of(''))
+    );
   }
 
   addFeed$(feed: CreateFeedBackendModel): Observable<Nullable<Request>> {

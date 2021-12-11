@@ -133,6 +133,14 @@
         ></p-button>
 
         <p-button
+          *ngIf="isDeleteShown"
+          [label]="'Удалить'"
+          [icon]="icons.delete"
+          (click)="delete()"
+          styleClass="button p-button p-button-danger"
+        ></p-button>
+
+        <p-button
           *ngIf="isMoveFromDraftToOpenedShown"
           [label]="'Открыть'"
           [icon]="icons.move"
